@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Navbar from "@/components/landing/navbar";
+import Footer from "@/components/landing/footer";
 import { Bookmark } from "lucide-react";
 
 const products = [
@@ -99,14 +100,13 @@ const ShopPage = () => {
                 <h3 className="text-sm font-extrabold  text-black">
                   {product.title}
                 </h3>
-                <p className="text-sm text-black">
-                  {product.price}
-                </p>
+                <p className="text-sm text-black">{product.price}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

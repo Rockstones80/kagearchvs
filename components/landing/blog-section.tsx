@@ -32,11 +32,11 @@ const blogCards: BlogCard[] = [
 const BlogSection = () => {
   return (
     <section className="relative w-full bg-white border-t-2 border-b-2 border-white">
-      <div className="grid grid-cols-1 md:grid-cols-3 h-[600px] md:h-[700px] gap-px">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px h-[400px]">
         {blogCards.map((card, index) => (
           <div
             key={index}
-            className="relative w-full h-[60%] overflow-hidden group cursor-pointer"
+            className="relative w-full overflow-hidden group cursor-pointer"
           >
             {/* Image */}
             <Image
