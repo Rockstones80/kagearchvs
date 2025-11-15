@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={item.label}
                 href={item.href}
-                className={` ${textClass} text-[12px] uppercase font-light hover:opacity-70 transition-opacity ${
+                className={`${textClass} text-[12px] uppercase hover:opacity-70 transition-opacity ${
                   item.visibilityClass || ""
                 }`}
               >

@@ -117,39 +117,41 @@ const LookbookPage = () => {
     };
   }, [selectedIndex, closeViewer, showPrev, showNext]);
 
+  const heightPattern = [220, 400, 300, 520, 260, 460, 340, 200];
+
   return (
-    <main className="w-full bg-white text-black ">
+    <main className="w-full  text-black">
       <Navbar
-        textClass="text-black"
-        iconClass="text-black"
-        logoSrc="/WEBB-03.png"
-        logoWidth={120}
-        logoHeight={120}
+        textClass="text-gray-700 font-medium"
+        iconClass="text-gray-700"
+        logoSrc="/logo-2.png"
+        // logoWidth={120}
+        // logoHeight={120}
       />
 
       {/* Intro Section */}
-      <section className="px-8 pt-32 pb-16 mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight">
-          Everybody Eat$
+      <section className="mx-auto px-6 pt-36 pb-20 md:px-10">
+        <h1 className="text-4xl font-extrabold uppercase tracking-tight md:text-5xl lg:text-6xl">
+        WELCOME TO KAGEARCHVS
         </h1>
-        <p className="mt-4 text-base md:text-lg font-medium">
+        {/* <p className="mt-4 text-base font-medium md:text-lg">
           Released Sat. June 29th 2024 – 11 AM (CEST)
-        </p>
-        <p className="mt-8 text-base md:text-lg leading-relaxed max-w-3xl">
-          We flew out to Rio de Janeiro to shoot the new summer collection in
-          the streets of the Favelas. The new collection features styles like
-          vintage tees with iconic prints, college jerseys, summer shorts & much
-          more.
+        </p> */}
+        <p className="mt-8 max-w-3xl text-base leading-relaxed text-gray-700 md:text-lg">
+        This is my little world of fashion, emotion, and raw expression — a space where every design tells a story, every texture mirrors a feeling, and every detail reflects a piece of who I am. KAGEARCHVS is more than clothing; it’s how I translate what I can’t always say into something you can see, feel, and wear.
         </p>
       </section>
 
       {/* Image Grid */}
-      <section className="px-4 md:px-8 lg:px-8 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 gap-y-16">
+      <section className="px-4 pb-32 md:px-8">
+        <div className="columns-1 gap-7 space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
           {lookbookImages.map((image, index) => (
             <div
               key={index}
-              className="relative w-full aspect-3/4 overflow-hidden cursor-pointer"
+              className="group relative mb-7 block w-full cursor-pointer break-inside-avoid overflow-hidden  border border-black/5 bg-[#f7f1ea] shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+              style={{
+                height: `${heightPattern[index % heightPattern.length]}px`,
+              }}
               onClick={() => setSelectedIndex(index)}
               role="button"
               tabIndex={0}
@@ -164,7 +166,7 @@ const LookbookPage = () => {
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 quality={100}
                 priority={index === 0}
               />

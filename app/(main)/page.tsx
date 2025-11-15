@@ -11,8 +11,6 @@ const page = () => {
     <div className="relative">
       <Navbar />
       <Hero />
-      <Collection />
-      <Hero2 />
       <BlogSection />
       <Footer />
     </div>

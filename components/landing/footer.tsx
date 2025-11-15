@@ -19,7 +19,7 @@ const Footer = () => {
               Be the first to know about new drops, lookbooks, and events.
             </p>
 
-            <form className="mt-8 max-w-xl">
+            <form className="max-w-xl">
               <label className="sr-only" htmlFor="newsletter-email">
                 Email
               </label>

@@ -8,5 +8,5 @@ export const navItems: NavItem[] = [
   { label: "SHOP", href: "/shop" },
   { label: "LOOKBOOK", href: "/lookbook" },
   { label: "ABOUT", href: "/about" },
-  { label: "BRAND", href: "#" },
+  { label: "BRAND", href: "/blog" },
 ];
