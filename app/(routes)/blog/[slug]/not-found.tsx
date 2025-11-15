@@ -14,7 +14,8 @@ export default function NotFound() {
       <section className="mx-auto w-full max-w-4xl px-6 pt-32 pb-24 md:px-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Post Not Found</h1>
         <p className="text-gray-600 mb-8">
-          The blog post you&apos;re looking for doesn&apos;t exist or has been removed.
+          The blog post you&apos;re looking for doesn&apos;t exist
+           has been removed.
         </p>
         <Link
           href="/blog"
