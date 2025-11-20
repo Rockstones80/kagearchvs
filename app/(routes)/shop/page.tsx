@@ -56,8 +56,8 @@ const ShopPage = () => {
       </section>
 
       {/* Products Meta Bar */}
-      <section className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 pt-10 gap-4">
-        <div className="text-xs uppercase tracking-wide text-gray-700 ">
+      <section className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 pt-6 md:pt-10 gap-3 md:gap-4">
+        <div className="text-xs uppercase tracking-wide text-gray-700">
           14 products
         </div>
         <button className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-700 hover:text-black transition-colors">
@@ -96,11 +96,13 @@ const ShopPage = () => {
                 </button>
               </div>
 
-              <div className="px-4 pt-1 pb-7">
-                <h3 className="text-sm font-extrabold  text-black">
+              <div className="px-3 md:px-4 pt-1 pb-4 md:pb-7">
+                <h3 className="text-xs sm:text-sm font-extrabold text-black line-clamp-2">
                   {product.title}
                 </h3>
-                <p className="text-sm text-black">{product.price}</p>
+                <p className="text-xs sm:text-sm text-black mt-1">
+                  {product.price}
+                </p>
               </div>
             </div>
           ))}

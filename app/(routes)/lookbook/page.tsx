@@ -130,21 +130,25 @@ const LookbookPage = () => {
       />
 
       {/* Intro Section */}
-      <section className="mx-auto px-6 pt-36 pb-20 md:px-10">
-        <h1 className="text-4xl font-extrabold uppercase tracking-tight md:text-5xl lg:text-6xl">
-        WELCOME TO KAGEARCHVS
+      <section className="mx-auto px-4 sm:px-6 pt-20 sm:pt-28 md:pt-36 pb-12 md:pb-20 md:px-10">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold uppercase tracking-tight">
+          WELCOME TO KAGEARCHVS
         </h1>
         {/* <p className="mt-4 text-base font-medium md:text-lg">
           Released Sat. June 29th 2024 – 11 AM (CEST)
         </p> */}
-        <p className="mt-8 max-w-3xl text-base leading-relaxed text-gray-700 md:text-lg">
-        This is my little world of fashion, emotion, and raw expression — a space where every design tells a story, every texture mirrors a feeling, and every detail reflects a piece of who I am. KAGEARCHVS is more than clothing; it’s how I translate what I can’t always say into something you can see, feel, and wear.
+        <p className="mt-4 sm:mt-6 md:mt-8 max-w-3xl text-sm sm:text-base leading-relaxed text-gray-700 md:text-lg">
+          This is my little world of fashion, emotion, and raw expression — a
+          space where every design tells a story, every texture mirrors a
+          feeling, and every detail reflects a piece of who I am. KAGEARCHVS is
+          more than clothing; it’s how I translate what I can’t always say into
+          something you can see, feel, and wear.
         </p>
       </section>
 
       {/* Image Grid */}
-      <section className="px-4 pb-32 md:px-8">
-        <div className="columns-1 gap-7 space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
+      <section className="px-2 sm:px-4 pb-16 md:pb-32 md:px-8">
+        <div className="columns-1 gap-4 sm:gap-7 space-y-4 sm:space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
           {lookbookImages.map((image, index) => (
             <div
               key={index}

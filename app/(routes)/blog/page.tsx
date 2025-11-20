@@ -55,7 +55,7 @@ const Page = async () => {
         logoSrc="/logo-2.png"
       />
       {/* Hero Section with Featured Blog */}
-      <section className="mx-auto w-full max-w-7xl px-6 pt-32 pb-12 md:px-12">
+      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-8 md:pb-12 md:px-12">
         {/* <h1 className="text-4xl md:text-5xl font-bold mb-8 text-black">
           Blogs
         </h1>
@@ -82,20 +82,20 @@ const Page = async () => {
               </div>
 
               {/* Text Content Section */}
-              <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
+              <div className="w-full md:w-1/2 p-4 sm:p-6 md:p-8 flex flex-col justify-between">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-black">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-black">
                     {blogPosts[0]?.title}
                   </h2>
-                  <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-4 md:mb-6">
                     {blogPosts[0]?.description}
                   </p>
                 </div>
 
                 {/* Author, Date, and Icons */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <User className="w-4 h-4" />
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500">
+                    <User className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>{blogPosts[0]?.author}</span>
                     <span>•</span>
                     <span>
@@ -103,18 +103,18 @@ const Page = async () => {
                         formatDate(blogPosts[0].publishedAt)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 md:gap-4">
                     <button
                       aria-label="Share"
                       className="text-gray-500 hover:text-black transition-colors"
                     >
-                      <Share2 className="w-5 h-5" />
+                      <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                     <button
                       aria-label="Bookmark"
                       className="text-gray-500 hover:text-black transition-colors"
                     >
-                      <Bookmark className="w-5 h-5" />
+                      <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
                 </div>
@@ -124,14 +124,14 @@ const Page = async () => {
         </Link>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-6 pb-24 md:px-12">
-        <div className="mb-12">
-          <p className="text-sm font-semibold uppercase tracking-[0.25rem] text-muted-foreground">
+      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 pb-16 md:pb-24 md:px-12">
+        <div className="mb-8 md:mb-12">
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25rem] text-muted-foreground">
             Latest Posts
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.slice(1).map((post) => (
             <Link key={post._id} href={`/blog/${post.slug.current}`}>
               <article className="bg-white rounded-lg overflow-hidden cursor-pointer flex flex-col transition-transform duration-500 hover:scale-97">
@@ -149,22 +149,22 @@ const Page = async () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="flex flex-1 flex-col py-5">
-                  <h2 className="text-lg md:text-xl font-semibold mb-3 text-black leading-tight">
+                <div className="flex flex-1 flex-col p-4 sm:py-5">
+                  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 text-black leading-tight">
                     {post.title}
                   </h2>
-                  <p className="text-[13px] text-gray-600 leading-relaxed mb-4 font-light">
+                  <p className="text-xs sm:text-[13px] text-gray-600 leading-relaxed mb-3 sm:mb-4 font-light">
                     {post.description}
                   </p>
 
                   {/* Author and Date */}
                   <div className="flex items-start gap-2 mt-auto">
-                    <User className="w-4 h-4 text-gray-600 mt-0.5 shrink-0" />
+                    <User className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 mt-0.5 shrink-0" />
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs text-gray-700 font-semibold">
+                      <span className="text-[10px] sm:text-xs text-gray-700 font-semibold">
                         {post.author || "KAGEARCHVS"}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-[10px] sm:text-xs text-gray-500">
                         {formatDate(post.publishedAt)}
                       </span>
                     </div>

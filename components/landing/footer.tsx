@@ -9,17 +9,17 @@ const Footer = () => {
 
   return (
     <footer className="bg-white">
-      <div className="mx-auto px-4 flex flex-col gap-16 pt-16">
-        <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-20">
+      <div className="mx-auto px-4 sm:px-6 flex flex-col gap-10 sm:gap-12 md:gap-16 pt-12 sm:pt-16">
+        <div className="flex flex-col lg:flex-row justify-between gap-8 sm:gap-12 lg:gap-20">
           <div className="max-w-xl">
-            <h3 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-wide text-black">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-wide text-black">
               Subscribe
             </h3>
-            <p className="mt-4 text-sm sm:text-base text-gray-600">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-600">
               Be the first to know about new drops, lookbooks, and events.
             </p>
 
-            <form className="max-w-xl">
+            <form className="max-w-xl mt-4 sm:mt-6">
               <label className="sr-only" htmlFor="newsletter-email">
                 Email
               </label>
@@ -28,21 +28,24 @@ const Footer = () => {
                   id="newsletter-email"
                   type="email"
                   placeholder="Email"
-                  className="flex-1 bg-transparent px-5 py-4 text-base sm:text-lg placeholder:text-gray-500 focus:outline-none"
+                  className="flex-1 bg-transparent px-3 sm:px-5 py-3 sm:py-4 text-sm sm:text-base md:text-lg placeholder:text-gray-500 focus:outline-none"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-5 py-4 text-gray-700 hover:text-black transition-colors"
+                  className="px-3 sm:px-5 py-3 sm:py-4 text-gray-700 hover:text-black transition-colors"
                   aria-label="Submit email"
                 >
-                  <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
+                  <ArrowRight
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    strokeWidth={1.5}
+                  />
                 </button>
               </div>
             </form>
           </div>
 
-          <div className="flex items-center gap-6 text-2xl text-black">
+          <div className="flex items-center gap-4 sm:gap-6 text-xl sm:text-2xl text-black">
             <Link
               href="https://instagram.com"
               aria-label="Instagram"
