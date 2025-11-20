@@ -26,11 +26,11 @@ export const products: Product[] = [
     slug: "kagearchvs-retail-therapy-tee",
     title: "KAGEARCHVS RETAIL THERAPY TEE",
     price: "₦22,999.99",
-    image: "/shop/shop1.png",
+    image: "/shop/shop1.PNG",
     badge: "New",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
-    images: ["/shop/shop1.png"],
+    images: ["/shop/shop1.PNG"],
     sizes: ["S", "M", "L"],
     sizeGuide: [
       { size: "S", length: "48", chest: "40", shoulder: "33" },
@@ -43,11 +43,11 @@ export const products: Product[] = [
     slug: "kagearchvs-broken-angels-sleeveless",
     title: "KAGEARCHVS BROKEN ANGELS SLEEVELESS",
     price: "₦25,999.99",
-    image: "/shop/shop2.png",
+    image: "/shop/shop2.PNG",
     badge: "New",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
-    images: ["/shop/shop2.png"],
+    images: ["/shop/shop2.PNG"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
     sizeGuide: [
       { size: "S", length: "68", chest: "53", shoulderWidth: "42" },
@@ -63,11 +63,11 @@ export const products: Product[] = [
     slug: "kagearchvs-the-dreaming-tee",
     title: "KAGEARCHVS THE DREAMING TEE",
     price: "₦22,999.99",
-    image: "/shop/shop3.png",
+    image: "/shop/shop3.PNG",
     badge: "New",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
-    images: ["/shop/shop3.png"],
+    images: ["/shop/shop3.PNG"],
     sizes: ["S", "M", "L"],
     sizeGuide: [
       { size: "S", length: "48", chest: "40", shoulder: "33" },
