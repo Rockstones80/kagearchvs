@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm md:bg-transparent transition-transform duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm md:bg-transparent transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -117,7 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
+          <div className="md:hidden ">
             <div className="flex flex-col py-4 space-y-3">
               {navItems.map((item) => (
                 <a
