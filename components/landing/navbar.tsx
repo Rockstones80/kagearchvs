@@ -94,7 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({
               alt="KAGEARCHVS"
               width={logoWidth}
               height={logoHeight}
-              className="w-24 h-auto md:w-auto md:h-auto"
+              className="w-24 h-auto md:w-[170px] md:h-auto"
               priority
             />
           </Link>
