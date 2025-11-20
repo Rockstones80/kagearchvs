@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import { urlFor } from "@/sanity/lib/image";
 
 interface BlogSectionPost {
@@ -28,7 +28,7 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
 
   return (
     <section className="relative w-full bg-white border-t-2 border-b-2 border-white">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-px h-[400px] sm:h-[500px] md:h-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-px h-[650px]">
         {blogCards.map((card) => (
           <Link
             key={card._id}
@@ -51,7 +51,7 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
 
             {/* Text Content Overlay */}
             <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 md:pt-8 md:px-4 z-10 md:pb-4">
-              <h3 className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold uppercase mb-2 md:mb-0">
+              <h3 className="text-white text-2xl lg:text-3xl font-bold uppercase mb-2 md:mb-0">
                 {card.title}
               </h3>
               <p className="text-white text-xs sm:text-sm md:text-[15px] leading-relaxed max-w-md mb-2 md:mb-4 flex items-end justify-between gap-2">
@@ -64,7 +64,7 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
                       ? `${card.description.slice(0, 140)}...`
                       : card.description}
                 </span>
-                <ArrowRight className="w-6 h-5 sm:w-8 sm:h-6 md:w-10 md:h-7 shrink-0 group-hover/link:translate-x-1 transition-transform" />
+                <span className="text-base sm:text-lg md:text-xl">→</span>
               </p>
             </div>
           </Link>
