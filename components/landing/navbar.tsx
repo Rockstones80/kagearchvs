@@ -6,6 +6,7 @@ import { navItems } from "@/constants/nav-items";
 import { navIcons } from "@/constants/nav-icons";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useCart } from "@/contexts/cart-context";
 
 interface NavbarProps {
   textClass?: string;
@@ -25,6 +26,8 @@ const Navbar: React.FC<NavbarProps> = ({
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
+  const cartItemCount = getTotalItems();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,17 +104,42 @@ const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Utility Icons */}
           <div className="flex items-center gap-3 md:gap-4 lg:gap-8">
-            {navIcons.map((item, index) => (
-              <button
-                key={index}
-                className={`hover:opacity-70 transition-opacity ${iconClass}`}
-              >
-                <item.Icon
-                  {...item.iconProps}
-                  className="w-5 h-5 md:w-6 md:h-6"
-                />
-              </button>
-            ))}
+            {navIcons.map((item, index) => {
+              // Cart icon should link to cart page
+              if (index === navIcons.length - 1) {
+                return (
+                  <Link
+                    key={index}
+                    href="/cart"
+                    className={`relative hover:opacity-70 transition-opacity ${iconClass}`}
+                  >
+                    <item.Icon
+                      {...item.iconProps}
+                      className="w-5 h-5 md:w-6 md:h-6"
+                    />
+                    {cartItemCount > 0 && (
+                      <span
+                        className="absolute -top-1 -right-1 bg-black text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
+                        suppressHydrationWarning
+                      >
+                        {cartItemCount > 9 ? "9+" : cartItemCount}
+                      </span>
+                    )}
+                  </Link>
+                );
+              }
+              return (
+                <button
+                  key={index}
+                  className={`hover:opacity-70 transition-opacity ${iconClass}`}
+                >
+                  <item.Icon
+                    {...item.iconProps}
+                    className="w-5 h-5 md:w-6 md:h-6"
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
 

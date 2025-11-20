@@ -137,7 +137,7 @@ const LookbookPage = () => {
           {lookbookImages.map((image, index) => (
             <div
               key={index}
-              className="group relative mb-7 block w-full cursor-pointer break-inside-avoid overflow-hidden  border border-black/5 bg-[#f7f1ea] shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+              className="group relative mb-7 block w-full cursor-pointer break-inside-avoid overflow-hidden  border border-black/5 shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
               style={{
                 height: `${heightPattern[index % heightPattern.length]}px`,
               }}
