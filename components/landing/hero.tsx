@@ -38,22 +38,16 @@ const Hero = () => {
 
       {/* Text overlay */}
       <div className="absolute inset-0 z-30 flex items-end">
-        <div className="w-full px-2 md:px-4 pb-2 md:pb-4 text-white">
-          <Link
-            href="/shop"
-            className="flex flex-row items-center justify-between w-full"
-          >
-            <h1 className="text-[28px] md:text-[45px] font-semibold uppercase md:mb-4">
+        <div className="w-full px-2 md:px-3 text-white">
+            <h1 className="text-[16px] md:text-[32px] font-extrabold md:font-bold uppercase tracking-tight">
               ALL PRODUCTS
             </h1>
-            <span className="text-[22px] md:hidden font-light">→</span>
-          </Link>
           <Link
             href="/shop"
-            className="hidden md:inline-flex items-center gap-2 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wide text-white hover:text-white/80 transition-colors"
+            className="items-center gap-2 text-xs font-medium uppercase tracking-wide text-white hover:text-white/80 transition-colors"
           >
             Shop now
-            <span className="text-base sm:text-lg md:text-xl">→</span>
+            <span className="text-base sm:text-lg md:text-xl hidden md:inline-flex">→</span>
           </Link>
         </div>
       </div>

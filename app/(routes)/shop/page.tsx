@@ -31,10 +31,10 @@ const ShopPage = () => {
         <div className="text-xs uppercase tracking-wide text-gray-700">
           {products.length} products
         </div>
-        <button className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-700 hover:text-black transition-colors">
+        {/* <button className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-700 hover:text-black transition-colors">
           Filters &amp; Sorting
           <span className="text-lg">≡</span>
-        </button>
+        </button> */}
       </section>
 
       {/* Products Grid */}

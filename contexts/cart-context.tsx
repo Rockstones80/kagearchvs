@@ -9,6 +9,8 @@ export interface Product {
   price: string;
   image: string;
   badge?: string;
+  size?: string;
+  color?: string;
 }
 
 export interface CartItem extends Product {
@@ -52,10 +54,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addToCart = (product: Product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      // Find existing item with same id, size, and color
+      const existingItem = prevItems.find(
+        (item) =>
+          item.id === product.id &&
+          item.size === product.size &&
+          item.color === product.color
+      );
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id
+          item.id === product.id &&
+          item.size === product.size &&
+          item.color === product.color
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -88,10 +98,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => {
-      const price = parseFloat(
-        item.price.replace(/[^\d.,]/g, "").replace(",", ".")
-      );
-      return total + price * item.quantity;
+      // Remove currency symbol and commas, then parse the price
+      // Example: "₦22,999.99" -> "22999.99" -> 22999.99
+      const price = parseFloat(item.price.replace(/[₦,]/g, "").trim());
+      return total + (isNaN(price) ? 0 : price) * item.quantity;
     }, 0);
   };
 

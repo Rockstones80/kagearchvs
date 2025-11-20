@@ -19,7 +19,13 @@ const CartPage = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const formatPrice = (price: number) => {
-    return price.toFixed(2).replace(".", ",") + " €";
+    return (
+      "₦" +
+      price.toLocaleString("en-NG", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
   };
 
   useEffect(() => {
@@ -129,7 +135,14 @@ const CartPage = () => {
                       >
                         {item.title}
                       </Link>
-                      <p className="text-sm text-gray-600 mb-4">{item.price}</p>
+                      <p className="text-sm text-gray-600">{item.price}</p>
+                      {(item.size || item.color) && (
+                        <p className="text-xs text-gray-500 mb-4">
+                          {item.size && `Size: ${item.size}`}
+                          {item.size && item.color && " • "}
+                          {item.color && `Color: ${item.color}`}
+                        </p>
+                      )}
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-3">

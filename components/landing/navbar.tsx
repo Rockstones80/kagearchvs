@@ -58,7 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({
       }`}
     >
       <div className="max-w-[1920px] mx-auto px-4">
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between h-12">
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -78,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={item.label}
                 href={item.href}
-                className={`${textClass} text-[12px] uppercase hover:opacity-70 transition-opacity ${
+                className={`${textClass} text-[10px] uppercase hover:opacity-70 transition-opacity ${
                   item.visibilityClass || ""
                 }`}
               >

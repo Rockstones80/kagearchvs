@@ -1,3 +1,11 @@
+export interface SizeGuide {
+  size: string;
+  length: string;
+  chest?: string;
+  shoulder?: string;
+  shoulderWidth?: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -9,73 +17,63 @@ export interface Product {
   images?: string[];
   sizes?: string[];
   colors?: string[];
+  sizeGuide?: SizeGuide[];
 }
 
 export const products: Product[] = [
   {
     id: "1",
-    slug: "kagearchvs-surfer-tee",
-    title: "KAGEARCHVS SURFER TEE",
-    price: "89,90 €",
-    image: "/shop/shop-1.png",
+    slug: "kagearchvs-retail-therapy-tee",
+    title: "KAGEARCHVS RETAIL THERAPY TEE",
+    price: "₦22,999.99",
+    image: "/shop/shop1.png",
     badge: "New",
     description:
-      "A premium quality t-shirt featuring our signature surfer design. Made from 100% organic cotton for ultimate comfort and style.",
-    images: ["/shop/shop-1.png"],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "White"],
+      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
+    images: ["/shop/shop1.png"],
+    sizes: ["S", "M", "L"],
+    sizeGuide: [
+      { size: "S", length: "48", chest: "40", shoulder: "33" },
+      { size: "M", length: "50", chest: "42", shoulder: "34" },
+      { size: "L", length: "52", chest: "44", shoulder: "35" },
+    ],
   },
   {
     id: "2",
-    slug: "kagearchvs-psycho-tee",
-    title: "KAGEARCHVS PSYCHO TEE",
-    price: "54,90 €",
-    image: "/shop/shop-2.png",
+    slug: "kagearchvs-broken-angels-sleeveless",
+    title: "KAGEARCHVS BROKEN ANGELS SLEEVELESS",
+    price: "₦25,999.99",
+    image: "/shop/shop2.png",
     badge: "New",
     description:
-      "Bold and edgy design that makes a statement. Crafted with attention to detail and premium materials.",
-    images: ["/shop/shop-2.png"],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "White"],
+      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
+    images: ["/shop/shop2.png"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    sizeGuide: [
+      { size: "S", length: "68", chest: "53", shoulderWidth: "42" },
+      { size: "M", length: "71", chest: "56", shoulderWidth: "45" },
+      { size: "L", length: "74", chest: "59", shoulderWidth: "48" },
+      { size: "XL", length: "77", chest: "62", shoulderWidth: "51" },
+      { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
+      { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
+    ],
   },
   {
     id: "3",
-    slug: "kagearchvs-broken-tee",
-    title: "KAGEARCHVS BROKEN TEE",
-    price: "89,90 €",
-    image: "/shop/shop-3.png",
+    slug: "kagearchvs-the-dreaming-tee",
+    title: "KAGEARCHVS THE DREAMING TEE",
+    price: "₦22,999.99",
+    image: "/shop/shop3.png",
     badge: "New",
     description:
-      "Unique broken design pattern that stands out from the crowd. Premium quality construction.",
-    images: ["/shop/shop-3.png"],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "White"],
-  },
-  {
-    id: "4",
-    slug: "kagearchvs-time-tee",
-    title: "KAGEARCHVS TIME TEE",
-    price: "24,90 €",
-    image: "/shop/shop-4.png",
-    badge: "New",
-    description:
-      "Classic design with a modern twist. Perfect for everyday wear with timeless appeal.",
-    images: ["/shop/shop-4.png"],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "White"],
-  },
-  {
-    id: "5",
-    slug: "kagearchvs-world-domination-tee",
-    title: "KAGEARCHVS WORLD DOMINATION TEE",
-    price: "129,90 €",
-    image: "/shop/shop-5.jpg",
-    badge: "New",
-    description:
-      "Premium limited edition design. Bold statement piece for those who dare to stand out.",
-    images: ["/shop/shop-5.jpg"],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["Black", "White"],
+      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
+    images: ["/shop/shop3.png"],
+    sizes: ["S", "M", "L"],
+    sizeGuide: [
+      { size: "S", length: "48", chest: "40", shoulder: "33" },
+      { size: "M", length: "50", chest: "42", shoulder: "34" },
+      { size: "L", length: "52", chest: "44", shoulder: "35" },
+    ],
   },
 ];
 
@@ -86,4 +84,3 @@ export const getProductBySlug = (slug: string): Product | undefined => {
 export const getAllProductSlugs = (): string[] => {
   return products.map((product) => product.slug);
 };
-

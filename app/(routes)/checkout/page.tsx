@@ -3,10 +3,21 @@
 import React, { useState, useEffect, startTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/landing/navbar";
 import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
 import { ArrowLeft, Lock } from "lucide-react";
+import toast from "react-hot-toast";
+
+// Dynamically import PaystackButton to avoid SSR issues
+const PaystackButton = dynamic(
+  () =>
+    import("@/components/checkout/paystack-button").then(
+      (mod) => mod.PaystackButton
+    ),
+  { ssr: false }
+);
 
 const CheckoutPage = () => {
   const { cartItems, getTotalPrice, clearCart } = useCart();
@@ -20,15 +31,169 @@ const CheckoutPage = () => {
     postalCode: "",
     country: "",
     phone: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Paystack configuration
+  const paystackConfig = {
+    reference: new Date().getTime().toString(),
+    email: formData.email,
+    amount: Math.round(getTotalPrice() * 100), // Amount in kobo (multiply by 100)
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "Customer Name",
+          variable_name: "customer_name",
+          value: `${formData.firstName} ${formData.lastName}`,
+        },
+        {
+          display_name: "Phone",
+          variable_name: "phone",
+          value: formData.phone,
+        },
+        {
+          display_name: "Shipping Address",
+          variable_name: "address",
+          value: `${formData.address}, ${formData.city}, ${formData.postalCode}, ${formData.country}`,
+        },
+      ],
+    },
+  };
+
+  // Success handler - Verify payment before completing
+  const onSuccess = async (reference: {
+    reference: string;
+    trans: string;
+    status: string;
+    message: string;
+    transaction: string;
+    trxref: string;
+  }) => {
+    console.log("Payment callback received:", reference);
+
+    try {
+      // Verify payment with our backend
+      const verifyResponse = await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ reference: reference.reference }),
+      });
+
+      const verifyData = await verifyResponse.json();
+
+      if (verifyResponse.ok && verifyData.success) {
+        console.log("Payment verified successfully:", verifyData);
+
+        // Save order to database
+        try {
+          const orderResponse = await fetch("/api/create-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              paymentReference: verifyData.data.reference,
+              customerEmail: formData.email,
+              customerName: `${formData.firstName} ${formData.lastName}`,
+              customerPhone: formData.phone,
+              shippingAddress: {
+                address: formData.address,
+                city: formData.city,
+                postalCode: formData.postalCode,
+                country: formData.country,
+              },
+              items: cartItems.map((item) => ({
+                productId: item.id,
+                title: item.title,
+                price: item.price,
+                quantity: item.quantity,
+                image: item.image,
+                size: item.size,
+                color: item.color,
+              })),
+              totalAmount: verifyData.data.amount,
+              currency: verifyData.data.currency,
+              paidAt: verifyData.data.paidAt,
+            }),
+          });
+
+          const orderData = await orderResponse.json();
+
+          if (orderResponse.ok && orderData.success) {
+            console.log("Order saved successfully:", orderData);
+          } else {
+            console.error("Failed to save order:", orderData);
+          }
+        } catch (orderError) {
+          console.error("Error saving order:", orderError);
+          // Don't fail the checkout if order save fails
+        }
+
+        // Clear cart only after verification
+        clearCart();
+        setIsProcessing(false);
+
+        // Show success toast
+        toast.success(
+          `Payment verified! ₦${verifyData.data.amount.toLocaleString("en-NG", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })} received. Order confirmed!`,
+          {
+            duration: 6000,
+            style: {
+              minWidth: "300px",
+            },
+          }
+        );
+
+        // You can redirect to a success page here
+        // router.push('/order-success');
+      } else {
+        console.error("Payment verification failed:", verifyData);
+        setIsProcessing(false);
+
+        toast.error(
+          `Payment verification failed. Please contact support with reference: ${reference.reference}`,
+          {
+            duration: 8000,
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error verifying payment:", error);
+      setIsProcessing(false);
+
+      toast.error(
+        `Error verifying payment. Reference: ${reference.reference}. Please contact support.`,
+        {
+          duration: 8000,
+        }
+      );
+    }
+  };
+
+  // Close handler
+  const onClose = () => {
+    console.log("Payment closed");
+    setIsProcessing(false);
+    toast.error("Payment cancelled. Your cart is still available.", {
+      icon: "ℹ️",
+    });
+  };
+
   const formatPrice = (price: number) => {
-    return price.toFixed(2).replace(".", ",") + " €";
+    return (
+      "₦" +
+      price.toLocaleString("en-NG", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
   };
 
   const handleInputChange = (
@@ -38,19 +203,17 @@ const CheckoutPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
-
-    // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // Clear cart after successful checkout
-    clearCart();
-    setIsProcessing(false);
-
-    // In a real app, you would redirect to a success page
-    alert("Order placed successfully! (This is a demo)");
+  const isFormValid = () => {
+    return (
+      formData.email &&
+      formData.firstName &&
+      formData.lastName &&
+      formData.phone &&
+      formData.address &&
+      formData.city &&
+      formData.postalCode &&
+      formData.country
+    );
   };
 
   useEffect(() => {
@@ -137,10 +300,7 @@ const CheckoutPage = () => {
           Checkout
         </h1>
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-2 space-y-8">
             {/* Contact Information */}
@@ -233,54 +393,32 @@ const CheckoutPage = () => {
                   className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
                 >
                   <option value="">Select Country</option>
+                  <option value="NG">Nigeria</option>
+                  <option value="GH">Ghana</option>
+                  <option value="KE">Kenya</option>
+                  <option value="ZA">South Africa</option>
                   <option value="US">United States</option>
                   <option value="UK">United Kingdom</option>
-                  <option value="DE">Germany</option>
-                  <option value="FR">France</option>
-                  <option value="ES">Spain</option>
-                  <option value="IT">Italy</option>
+                  <option value="CA">Canada</option>
                 </select>
               </div>
             </section>
 
-            {/* Payment Information */}
+            {/* Payment Note */}
             <section>
-              <h2 className="text-lg font-bold text-black mb-4 uppercase flex items-center gap-2">
-                <Lock className="w-5 h-5" />
-                Payment Information
-              </h2>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  name="cardNumber"
-                  placeholder="Card Number"
-                  value={formData.cardNumber}
-                  onChange={handleInputChange}
-                  required
-                  maxLength={19}
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
-                />
-                <div className="grid grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    name="expiryDate"
-                    placeholder="MM/YY"
-                    value={formData.expiryDate}
-                    onChange={handleInputChange}
-                    required
-                    maxLength={5}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
-                  />
-                  <input
-                    type="text"
-                    name="cvv"
-                    placeholder="CVV"
-                    value={formData.cvv}
-                    onChange={handleInputChange}
-                    required
-                    maxLength={3}
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
-                  />
+              <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div className="flex items-start gap-3">
+                  <Lock className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="font-semibold text-black mb-1">
+                      Secure Payment with Paystack
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      You&apos;ll be redirected to Paystack&apos;s secure
+                      payment gateway to complete your purchase. We accept all
+                      major cards, bank transfers, and mobile money.
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>
@@ -337,30 +475,32 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={isProcessing}
-                className="w-full bg-black text-white py-4 uppercase text-sm font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isProcessing ? (
-                  <>
-                    <span className="animate-spin">⏳</span>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-4 h-4" />
-                    Place Order
-                  </>
-                )}
-              </button>
+              {isMounted && (
+                <PaystackButton
+                  config={paystackConfig}
+                  onSuccess={onSuccess}
+                  onClose={onClose}
+                  isProcessing={isProcessing}
+                  disabled={!isFormValid()}
+                />
+              )}
+
+              {!isMounted && (
+                <button
+                  disabled
+                  className="w-full bg-black text-white py-4 uppercase text-sm font-medium opacity-50 cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  <span className="animate-spin">⏳</span>
+                  Loading...
+                </button>
+              )}
 
               <p className="text-xs text-gray-500 mt-4 text-center">
-                Your payment information is secure and encrypted
+                Secured by Paystack - Your payment information is encrypted
               </p>
             </div>
           </div>
-        </form>
+        </div>
       </div>
 
       <Footer />

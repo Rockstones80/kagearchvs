@@ -15,14 +15,14 @@ export const navIcons: NavIcon[] = [
   {
     Icon: User,
     iconProps: {
-      className: "w-6 h-6",
+      className: "w-4 h-4",
       strokeWidth: 1.0,
     },
   },
   {
     Icon: PiBagSimpleThin,
     iconProps: {
-      className: "w-6 h-6",
+      className: "w-4 h-4",
       strokeWidth: 1.5,
     },
   },
