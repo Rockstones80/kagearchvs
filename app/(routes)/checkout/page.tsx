@@ -288,13 +288,13 @@ const CheckoutPage = () => {
 
       <div className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
         {/* Back Button */}
-        <Link
+        {/* <Link
           href="/cart"
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-black mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Cart
-        </Link>
+        </Link> */}
 
         <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 uppercase">
           Checkout
