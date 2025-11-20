@@ -12,14 +12,6 @@ const lookbookImages = [
     alt: "Street Souk x Homecoming lookbook shot",
   },
   {
-    src: "/lookbook/time+-ig-portrait-1080-1350.jpeg",
-    alt: "Time plus portrait lookbook",
-  },
-  {
-    src: "/lookbook/handsandsTime1-ig-portrait-1080-1350.jpeg",
-    alt: "Hands and time portrait lookbook",
-  },
-  {
     src: "/lookbook/boutUfullposter-ig-portrait-1080-1350.jpeg",
     alt: "Bout U Full poster",
   },
@@ -27,14 +19,7 @@ const lookbookImages = [
     src: "/lookbook/surfernew-ig-portrait-1080-1350.jpeg",
     alt: "Surfer new portrait",
   },
-  {
-    src: "/lookbook/vigilante1-ig-portrait-1080-1350.jpeg",
-    alt: "Vigilante portrait 1",
-  },
-  {
-    src: "/lookbook/vigilante2-ig-portrait-1080-1350.jpeg",
-    alt: "Vigilante portrait 2",
-  },
+
   { src: "/lookbook/solitudeS.jpg", alt: "Solitude lookbook" },
   { src: "/lookbook/dragonsigilig-02.jpg", alt: "Dragon sigil 02" },
   { src: "/lookbook/dragonsigilig-03.jpg", alt: "Dragon sigil 03" },
