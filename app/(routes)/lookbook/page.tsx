@@ -148,7 +148,7 @@ const LookbookPage = () => {
 
       {/* Image Grid */}
       <section className="px-2 sm:px-4 pb-16 md:pb-32 md:px-8">
-        <div className="columns-1 gap-4 sm:gap-7 space-y-4 sm:space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
+        <div className="columns-2 gap-4 sm:gap-7 space-y-4 sm:space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
           {lookbookImages.map((image, index) => (
             <div
               key={index}

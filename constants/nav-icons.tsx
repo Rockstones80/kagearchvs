@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { IconType } from "react-icons";
-import { Search, User } from "lucide-react";
+import { User } from "lucide-react";
 import { PiBagSimpleThin } from "react-icons/pi";
 
 export interface NavIcon {
@@ -12,13 +12,6 @@ export interface NavIcon {
 }
 
 export const navIcons: NavIcon[] = [
-  {
-    Icon: Search,
-    iconProps: {
-      className: "w-6 h-6",
-      strokeWidth: 1.0,
-    },
-  },
   {
     Icon: User,
     iconProps: {
