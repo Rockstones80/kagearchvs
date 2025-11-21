@@ -19,7 +19,7 @@ const ProductPage = () => {
   const { addToCart } = useCart();
 
   const [selectedSize, setSelectedSize] = useState<string>("M");
-  const [selectedColor, setSelectedColor] = useState<string>("Black");
+  // const [selectedColor, setSelectedColor] = useState<string>("Black");
   const [quantity, setQuantity] = useState<number>(1);
   const [showSizeGuide, setShowSizeGuide] = useState<boolean>(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
@@ -67,13 +67,13 @@ const ProductPage = () => {
         image: product.image,
         badge: product.badge,
         size: selectedSize,
-        color: selectedColor,
+        // color: selectedColor,
       });
     }
 
     // Show success toast
     toast.success(
-      `${quantity} ${quantity > 1 ? "items" : "item"} added to cart! (${selectedSize}, ${selectedColor})`,
+      `${quantity} ${quantity > 1 ? "items" : "item"} added to cart! (${selectedSize})`,
       {
         duration: 3000,
         icon: "🛒",
@@ -95,7 +95,7 @@ const ProductPage = () => {
         image: product.image,
         badge: product.badge,
         size: selectedSize,
-        color: selectedColor,
+        // color: selectedColor,
       });
     }
 
@@ -210,7 +210,7 @@ const ProductPage = () => {
               </div>
             )}
 
-            {/* Color Selection */}
+            {/* Color Selection
             {product.colors && product.colors.length > 0 && (
               <div className="mb-6">
                 <label className="block text-sm font-medium text-black mb-3 uppercase">
@@ -232,7 +232,7 @@ const ProductPage = () => {
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Quantity */}
             <div className="mb-8">
@@ -350,13 +350,11 @@ const ProductPage = () => {
                 {openAccordion === "shipping" && (
                   <div className="pb-4 text-sm text-gray-600 space-y-2">
                     <p>
-                      <strong className="text-black">Free Shipping</strong> on
-                      orders over 100€
+                    Please confirm by reading the delivery information of each item. Also, ensure you provide a valid email and phone number when placing an order to avoid communication issues.
                     </p>
-                    <p>Delivery in 3-5 business days</p>
+                    <p>All preordered items typically take 2-3 weeks for production. Shipping commences after.</p>
                     <p>
-                      <strong className="text-black">Secure Payment</strong>{" "}
-                      with SSL encryption
+                    Progress of pre-ordered items will be shared via kagearchvs™ instagram story @prxjectkage.
                     </p>
                   </div>
                 )}

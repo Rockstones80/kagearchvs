@@ -15,7 +15,7 @@ const Footer = () => {
             <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-wide text-black">
               Subscribe
             </h3>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-600">
+            <p className="text-sm text-gray-600">
               Be the first to know about new drops, lookbooks, and events.
             </p>
 
@@ -47,21 +47,21 @@ const Footer = () => {
 
           <div className="flex items-center gap-4 sm:gap-6 text-xl sm:text-2xl text-black">
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/prxjectkage?igsh=MWVqaGFub3ZpNWF0NA=="
               aria-label="Instagram"
               className="hover:opacity-70 transition-opacity"
             >
               <FaInstagram />
             </Link>
             <Link
-              href="https://tiktok.com"
+              href="https://www.tiktok.com/@kagearchvs?_r=1&_t=ZS-91Zv5BqOIBs"
               aria-label="TikTok"
               className="hover:opacity-70 transition-opacity"
             >
               <FaTiktok />
             </Link>
             <Link
-              href="https://pinterest.com"
+              href="https://pin.it/4vL372qqy"
               aria-label="Pinterest"
               className="hover:opacity-70 transition-opacity"
             >

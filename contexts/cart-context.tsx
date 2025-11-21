@@ -59,13 +59,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         (item) =>
           item.id === product.id &&
           item.size === product.size &&
-          item.color === product.color
+          // item.color === product.color
+          true
       );
       if (existingItem) {
         return prevItems.map((item) =>
           item.id === product.id &&
           item.size === product.size &&
-          item.color === product.color
+          // item.color === product.color
+          true
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );

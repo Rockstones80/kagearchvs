@@ -35,11 +35,27 @@ const CheckoutPage = () => {
 
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Calculate shipping fee based on city
+  const getShippingFee = () => {
+    if (!formData.city) return 0;
+    const city = formData.city.toLowerCase().trim();
+    // Check if city is Lagos
+    if (city === "lagos" || city.includes("lagos")) {
+      return 5500;
+    }
+    // Outside Lagos
+    return 8000;
+  };
+
+  const shippingFee = getShippingFee();
+  const subtotal = getTotalPrice();
+  const totalWithShipping = subtotal + shippingFee;
+
   // Paystack configuration
   const paystackConfig = {
     reference: new Date().getTime().toString(),
     email: formData.email,
-    amount: Math.round(getTotalPrice() * 100), // Amount in kobo (multiply by 100)
+    amount: Math.round(totalWithShipping * 100), // Amount in kobo (multiply by 100)
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
     metadata: {
       custom_fields: [
@@ -115,6 +131,8 @@ const CheckoutPage = () => {
                 size: item.size,
                 color: item.color,
               })),
+              subtotal: subtotal,
+              shippingFee: shippingFee,
               totalAmount: verifyData.data.amount,
               currency: verifyData.data.currency,
               paidAt: verifyData.data.paidAt,
@@ -457,19 +475,29 @@ const CheckoutPage = () => {
               <div className="space-y-4 mb-6 border-t border-gray-300 pt-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">
-                    {formatPrice(getTotalPrice())}
-                  </span>
+                  <span className="font-medium">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium">Calculated at checkout</span>
+                  <span className="font-medium">
+                    {shippingFee > 0
+                      ? formatPrice(shippingFee)
+                      : "Enter city to calculate"}
+                  </span>
                 </div>
+                {shippingFee > 0 && (
+                  <p className="text-xs text-gray-500">
+                    {formData.city.toLowerCase().trim() === "lagos" ||
+                    formData.city.toLowerCase().includes("lagos")
+                      ? "Lagos shipping"
+                      : "Outside Lagos shipping"}
+                  </p>
+                )}
                 <div className="border-t border-gray-300 pt-4">
                   <div className="flex justify-between">
                     <span className="font-bold text-black">Total</span>
                     <span className="font-bold text-black text-lg">
-                      {formatPrice(getTotalPrice())}
+                      {formatPrice(totalWithShipping)}
                     </span>
                   </div>
                 </div>
