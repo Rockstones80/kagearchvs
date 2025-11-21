@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/landing/navbar";
 import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
-import { ArrowLeft, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import toast from "react-hot-toast";
 
 // Dynamically import PaystackButton to avoid SSR issues
@@ -28,19 +28,19 @@ const CheckoutPage = () => {
     lastName: "",
     address: "",
     city: "",
-    postalCode: "",
+    state: "",
     country: "",
     phone: "",
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Calculate shipping fee based on city
+  // Calculate shipping fee based on state
   const getShippingFee = () => {
-    if (!formData.city) return 0;
-    const city = formData.city.toLowerCase().trim();
-    // Check if city is Lagos
-    if (city === "lagos" || city.includes("lagos")) {
+    if (!formData.state) return 0;
+    const state = formData.state.toLowerCase().trim();
+    // Check if state is Lagos
+    if (state === "lagos" || state.includes("lagos")) {
       return 5500;
     }
     // Outside Lagos
@@ -72,7 +72,7 @@ const CheckoutPage = () => {
         {
           display_name: "Shipping Address",
           variable_name: "address",
-          value: `${formData.address}, ${formData.city}, ${formData.postalCode}, ${formData.country}`,
+          value: `${formData.address}, ${formData.city}, ${formData.state}, ${formData.country}`,
         },
       ],
     },
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
               shippingAddress: {
                 address: formData.address,
                 city: formData.city,
-                postalCode: formData.postalCode,
+                state: formData.state,
                 country: formData.country,
               },
               items: cartItems.map((item) => ({
@@ -229,7 +229,7 @@ const CheckoutPage = () => {
       formData.phone &&
       formData.address &&
       formData.city &&
-      formData.postalCode &&
+      formData.state &&
       formData.country
     );
   };
@@ -395,9 +395,9 @@ const CheckoutPage = () => {
                   />
                   <input
                     type="text"
-                    name="postalCode"
-                    placeholder="Postal Code"
-                    value={formData.postalCode}
+                    name="state"
+                    placeholder="State"
+                    value={formData.state}
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-black transition-colors"
@@ -482,13 +482,13 @@ const CheckoutPage = () => {
                   <span className="font-medium">
                     {shippingFee > 0
                       ? formatPrice(shippingFee)
-                      : "Enter city to calculate"}
+                      : "Enter state to calculate"}
                   </span>
                 </div>
                 {shippingFee > 0 && (
                   <p className="text-xs text-gray-500">
-                    {formData.city.toLowerCase().trim() === "lagos" ||
-                    formData.city.toLowerCase().includes("lagos")
+                    {formData.state.toLowerCase().trim() === "lagos" ||
+                    formData.state.toLowerCase().includes("lagos")
                       ? "Lagos shipping"
                       : "Outside Lagos shipping"}
                   </p>
