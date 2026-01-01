@@ -48,7 +48,7 @@ const Slideshow: React.FC<SlideshowProps> = ({
             alt={image.alt}
             fill
             priority={index === 0}
-            className="object-cover object-top md:object-center"
+            className="object-cover object-top"
             quality={100}
           />
         </div>

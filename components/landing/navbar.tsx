@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm md:bg-transparent transition-transform duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-transparent md:bg-transparent transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

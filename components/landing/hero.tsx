@@ -4,14 +4,14 @@ import Image from "next/image";
 import Slideshow from "../ui/slideshow";
 
 const heroImages = [
-  { src: "/hero-1.png", alt: "Hero 1" },
-  { src: "/hero-2.jpg", alt: "Hero 2" },
-  { src: "/hero-3.jpg", alt: "Hero 3" },
+  { src: "/1.jpg", alt: "Hero 1" },
+  { src: "/5.jpg", alt: "Hero 2" },
+  { src: "/4.jpg", alt: "Hero 3" },
 ];
 
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen overflow-hidden">
+    <section className="relative w-full h-screen overflow-hidden pt-10">
       {/* Mobile/Tablet: Single static image */}
       <div className="absolute inset-0 w-full h-full md:hidden">
         <Image
@@ -25,7 +25,7 @@ const Hero = () => {
       </div>
 
       {/* Desktop: Slideshow */}
-      <div className="hidden md:block absolute inset-0 w-full h-full">
+      <div className="hidden md:block absolute inset-0 w-full h-full ">
         <Slideshow
           images={heroImages}
           interval={5000}
@@ -34,7 +34,7 @@ const Hero = () => {
       </div>
 
       {/* Dark overlay to reduce image brightness */}
-      <div className="absolute inset-0 bg-black/40 z-20"></div>
+      <div className="absolute inset-0 bg-black/20 z-20"></div>
 
       {/* Text overlay */}
       <div className="absolute inset-0 z-30 flex items-end">
