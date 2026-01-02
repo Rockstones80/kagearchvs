@@ -10,9 +10,8 @@ const heroImages = [
 ];
 
 const heroImagesMobile = [
-  { src: "/D1.jpg", alt: "Hero 1" },
-  { src: "/D9.jpg", alt: "Hero 2" },
   { src: "/D10.jpg", alt: "Hero 3" },
+  { src: "/D9.jpg", alt: "Hero 2" },
   { src: "/D7.jpg", alt: "Hero 4" },
 ];
 
