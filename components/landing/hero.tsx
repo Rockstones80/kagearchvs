@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import Slideshow from "../ui/slideshow";
 
 const heroImages = [
@@ -9,23 +9,28 @@ const heroImages = [
   { src: "/4.jpg", alt: "Hero 3" },
 ];
 
+const heroImagesMobile = [
+  { src: "/D1.jpg", alt: "Hero 1" },
+  { src: "/D9.jpg", alt: "Hero 2" },
+  { src: "/D10.jpg", alt: "Hero 3" },
+  { src: "/D7.jpg", alt: "Hero 4" },
+];
+
+
 const Hero = () => {
   return (
     <section className="relative w-full h-screen overflow-hidden pt-10">
-      {/* Mobile/Tablet: Single static image */}
-      <div className="absolute inset-0 w-full h-full md:hidden">
-        <Image
-          src="/hero-5.png"
-          alt="Hero"
-          fill
-          priority
-          className="object-cover object-top"
-          quality={100}
+      {/* {/* Mobile/Tablet: Single static image */}
+      <div className="absolute inset-0 w-full h-full md:hidden block">
+      <Slideshow
+          images={heroImagesMobile}
+          interval={5000}
+          transitionDuration={1000}
         />
-      </div>
+      </div> 
 
       {/* Desktop: Slideshow */}
-      <div className="hidden md:block absolute inset-0 w-full h-full ">
+      <div className=" absolute inset-0 w-full h-full hidden md:block">
         <Slideshow
           images={heroImages}
           interval={5000}
