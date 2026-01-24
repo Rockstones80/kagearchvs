@@ -23,9 +23,9 @@ export interface Product {
 export const products: Product[] = [
   {
     id: "1",
-    slug: "kagearchvs-retail-therapy-tee",
-    title: "KAGEARCHVS RETAIL THERAPY TEE",
-    price: "₦22,999.99",
+    slug: "kagearchvs-broken-angels-tee",
+    title: "KAGEARCHVS BROKEN ANGELS TEE",
+    price: "₦29,999.99",
     image: "/shop/shop1.PNG",
     badge: "New",
     description:
@@ -42,7 +42,7 @@ export const products: Product[] = [
     id: "2",
     slug: "kagearchvs-broken-angels-sleeveless",
     title: "KAGEARCHVS BROKEN ANGELS SLEEVELESS",
-    price: "₦25,999.99",
+    price: "₦27,999.99",
     image: "/shop/shop2.PNG",
     badge: "New",
     description:
@@ -60,14 +60,14 @@ export const products: Product[] = [
   },
   {
     id: "3",
-    slug: "kagearchvs-the-dreaming-tee",
-    title: "KAGEARCHVS THE DREAMING TEE",
-    price: "₦22,999.99",
-    image: "/shop/shop3.PNG",
+    slug: "kagearchvs-broken-angels-hoodie",
+    title: "KAGEARCHVS BROKEN ANGELS HOODIE",
+    price: "₦49,999.99",
+    image: "/shop/shop-6.jpg",
     badge: "New",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
-    images: ["/shop/shop3.PNG"],
+    images: ["/shop/shop-6.jpg"],
     sizes: ["S", "M", "L"],
     sizeGuide: [
       { size: "S", length: "48", chest: "40", shoulder: "33" },

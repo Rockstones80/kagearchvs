@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Navbar from "@/components/landing/navbar";
-import Footer from "@/components/landing/footer";
+// import Footer from "@/components/landing/footer";
 import Image from "next/image";
 import { Share2, Bookmark, User } from "lucide-react";
 import { client } from "@/sanity/lib/client";
@@ -42,7 +42,7 @@ const Page = async () => {
             No blog posts found. Create your first post in Sanity Studio!
           </p>
         </section>
-        <Footer />
+        {/* <Footer /> */}
       </main>
     );
   }
@@ -175,7 +175,7 @@ const Page = async () => {
           ))}
         </div>
       </section>
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

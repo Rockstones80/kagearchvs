@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Navbar from "@/components/landing/navbar";
-import Footer from "@/components/landing/footer";
+// import Footer from "@/components/landing/footer";
 import { useEffect, useState, useCallback } from "react";
 
 const lookbookImages = [
@@ -211,7 +211,7 @@ const LookbookPage = () => {
           </div>
         </div>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

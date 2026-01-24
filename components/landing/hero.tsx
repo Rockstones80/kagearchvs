@@ -4,15 +4,15 @@ import Link from "next/link";
 import Slideshow from "../ui/slideshow";
 
 const heroImages = [
-  { src: "/1.jpg", alt: "Hero 1" },
-  { src: "/5.jpg", alt: "Hero 2" },
-  { src: "/4.jpg", alt: "Hero 3" },
+  { src: "/hero-9.3.jpg", alt: "Hero 1" },
+  { src: "/hero-9.2.jpg", alt: "Hero 2" },
+  { src: "/hero-9.4.jpg", alt: "Hero 3" },
 ];
 
 const heroImagesMobile = [
-  { src: "/D10.jpg", alt: "Hero 3" },
-  { src: "/D9.jpg", alt: "Hero 2" },
-  { src: "/D7.jpg", alt: "Hero 4" },
+  { src: "/t1.jpg", alt: "Hero 3" },
+  { src: "/her0-9.5.png", alt: "Hero 2" },
+  // { src: "/hero-8.png", alt: "Hero 4" },
 ];
 
 
@@ -43,7 +43,7 @@ const Hero = () => {
       {/* Text overlay */}
       <div className="absolute inset-0 z-30 flex items-end">
         <div className="w-full px-2 md:px-3 text-white">
-            <h1 className="text-[16px] md:text-[32px] font-extrabold md:font-bold uppercase tracking-tight">
+            <h1 className="text-[16px] md:text-[30px] font-extrabold md:font-bold uppercase tracking-tight">
               ALL PRODUCTS
             </h1>
           <Link

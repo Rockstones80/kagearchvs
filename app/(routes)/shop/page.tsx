@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/landing/navbar";
-import Footer from "@/components/landing/footer";
+// import Footer from "@/components/landing/footer";
 import { Bookmark } from "lucide-react";
 import { products } from "@/lib/products";
 
@@ -15,7 +15,7 @@ const ShopPage = () => {
       {/* Hero Section */}
       <section className="relative w-full min-h-[365px] overflow-hidden">
         <Image
-          src="/hero-2.jpg"
+          src="/hero-9.1.jpg"
           alt="ComplexCon Drop"
           fill
           priority
@@ -87,7 +87,7 @@ const ShopPage = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

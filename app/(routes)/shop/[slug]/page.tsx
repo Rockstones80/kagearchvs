@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/landing/navbar";
-import Footer from "@/components/landing/footer";
+// import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
 import { getProductBySlug } from "@/lib/products";
 import { Minus, Plus, X, ChevronDown } from "lucide-react";
@@ -50,7 +50,7 @@ const ProductPage = () => {
             Back to Shop
           </Link>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </main>
     );
   }
@@ -364,7 +364,7 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
 
       {/* Size Guide Modal */}
       {showSizeGuide && (
