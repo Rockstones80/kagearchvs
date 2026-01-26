@@ -26,7 +26,7 @@ export const products: Product[] = [
     slug: "kagearchvs-broken-angels-tee",
     title: "KAGEARCHVS BROKEN ANGELS TEE",
     price: "₦29,999.99",
-    image: "/shop/shop1.PNG",
+    image: "/shop/89.JPG",
     badge: "New",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
