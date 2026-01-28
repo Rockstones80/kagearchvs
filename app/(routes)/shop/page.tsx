@@ -63,7 +63,7 @@ const ShopPage = () => {
                 )}
 
                 {/* Bookmark icon */}
-                <button
+                {/* <button
                   aria-label="Save product"
                   className="absolute top-4 right-4 p-1 transition-colors z-10"
                   onClick={(e) => {
@@ -72,7 +72,7 @@ const ShopPage = () => {
                   }}
                 >
                   <Bookmark className="w-6 h-6 text-black/50" strokeWidth={1} />
-                </button>
+                </button> */}
               </div>
 
               <div className="px-3 md:px-4 pt-1 pb-4 md:pb-7">

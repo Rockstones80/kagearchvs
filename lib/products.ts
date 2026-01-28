@@ -33,7 +33,7 @@ export const products: Product[] = [
     images: [
       "/shop/23.JPG",
       "/shop/24.JPG",
-      "/shop/L4.JPG",
+      "/shop/L4.jpg",
       "/shop/89.JPG",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -56,7 +56,7 @@ export const products: Product[] = [
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/L9.JPG",
+      "/shop/L9.jpg",
       "/shop/29.JPG",
       "/shop/30.JPG",
       "/shop/D1.JPG",
@@ -83,7 +83,7 @@ export const products: Product[] = [
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images:
      [
-       "/shop/l1.JPG",
+       "/shop/L1.jpg",
        "/shop/27.jpg",
        "/shop/28.jpg",
       "/shop/D1.JPG",
