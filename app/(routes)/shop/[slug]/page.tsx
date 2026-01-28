@@ -8,6 +8,7 @@ import Navbar from "@/components/landing/navbar";
 // import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
 import { getProductBySlug } from "@/lib/products";
+import Slideshow from "@/components/ui/slideshow";
 import { Minus, Plus, X, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -119,6 +120,13 @@ const ProductPage = () => {
     }
   };
 
+  const productImages = Array.from(
+    new Set([product.image, ...(product.images ?? [])].filter(Boolean))
+  ).map((src) => ({
+    src,
+    alt: product.title,
+  }));
+
   return (
     <main className="w-full bg-white min-h-screen">
       <Navbar
@@ -141,13 +149,22 @@ const ProductPage = () => {
           {/* Product Images */}
           <div className="space-y-4">
             <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                className="object-cover"
-                priority
-              />
+              {productImages.length > 1 ? (
+                <Slideshow
+                  images={productImages}
+                  interval={3000}
+                  transitionDuration={600}
+                  className=""
+                />
+              ) : (
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              )}
               {/* {product.badge && (
                 <span className="absolute top-4 left-4 text-[10px] font-semibold text-black bg-white px-2 py-1">
                   {product.badge}
