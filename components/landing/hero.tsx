@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import Slideshow from "@/components/ui/slideshow";
 
@@ -61,20 +62,22 @@ const Hero = () => {
       {/* Dark tint */}
       <div ref={overlayRef} className="absolute inset-0 bg-black/25 z-20" />
 
-      {/* Centered white logo */}
+      {/* Centered white logo — links to shop */}
       <div
         ref={logoRef}
         className="absolute inset-0 z-30 flex items-center justify-center"
       >
-        <Image
-          src="/navbar.png"
-          alt="KAGEARCHVS"
-          width={400}
-          height={100}
-          className="brightness-0 invert w-[240px] md:w-[400px] h-auto"
-          style={{ opacity: 0.55 }}
-          priority
-        />
+        <Link href="/shop">
+          <Image
+            src="/navbar.png"
+            alt="KAGEARCHVS"
+            width={400}
+            height={100}
+            className="brightness-0 invert w-[240px] md:w-[400px] h-auto"
+            style={{ opacity: 0.55 }}
+            priority
+          />
+        </Link>
       </div>
 
     </section>

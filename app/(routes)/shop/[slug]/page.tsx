@@ -378,11 +378,11 @@ const ProductPage = () => {
       {/* Size Guide Modal */}
       {showSizeGuide && (
         <div
-          className="fixed inset-0 bg-black/50 z-50"
+          className="fixed inset-0 bg-black/50 z-[200]"
           onClick={() => setShowSizeGuide(false)}
         >
           <div
-            className="fixed right-0 top-0 h-full bg-white w-full sm:w-[400px] overflow-y-auto shadow-2xl"
+            className="fixed right-0 top-0 h-full bg-white w-full sm:w-[400px] overflow-y-auto shadow-2xl z-[201]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
