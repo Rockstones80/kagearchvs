@@ -1,0 +1,279 @@
+// hero.module.scss — 1:1 port of korty's _home.scss (desktop landing)
+// Mixins are inlined; class names mirror LandingDesktop.vue exactly.
+
+// ── Variables (from _variables.scss) ─────────────────────────────
+$col-cream: #f7f5f5;
+$col-black: #121821;
+$col-gray:  #525760;
+
+// ─────────────────────────────────────────────────────────────────
+// .desktop-landing
+// ─────────────────────────────────────────────────────────────────
+.desktopLanding {
+  padding: 48px 52px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// .c-landing__header  (flex, paragraph, 500, uppercase, mb 70px)
+// ─────────────────────────────────────────────────────────────────
+.landingHeader {
+  // @include flex(space-between, center)
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // @include paragraph  →  title-small + letter-spacing normal
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-transform: uppercase;
+
+  margin-bottom: 70px;
+  flex-shrink: 0;
+
+  @media screen and (max-height: 740px) {
+    margin-bottom: 25px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// .c-landing__desktop  (fills remaining height, stacking grid)
+// ─────────────────────────────────────────────────────────────────
+.landingDesktop {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 16px 0;
+  display: grid;    // children use grid-area: 1/1 to stack
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Each stacked layer — both hero-content & hero-links share this
+// (> div inside .c-landing__desktop in korty's SCSS)
+// ─────────────────────────────────────────────────────────────────
+.gridLayer {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(12, calc(100% / 12));
+  grid-template-rows: repeat(12, calc(100% / 12));
+  grid-auto-flow: row dense;
+
+  @media screen and (max-height: 700px) {
+    grid-template-rows: repeat(12, calc(95% / 12));
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Layer 1 — hero-content
+// ─────────────────────────────────────────────────────────────────
+
+// .hero-image  (col 6-12, row span 11)
+.heroImage {
+  grid-column-start: 6;
+  grid-column-end: 12;
+  grid-row: span 11;
+  display: grid;
+  overflow: hidden;
+
+  > div {
+    grid-area: 1 / 1;  // image-mask & c-image stack here
+  }
+}
+
+// .c-image  (the background photo)
+.cImage {
+  background-image: url("/hero-9.2.jpg");
+  background-position: 50% 15%;
+  background-size: cover;
+}
+
+// .c-name__image  (circular profile photo, col 1-3, rows 1-4)
+.nameImage {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  width: calc(100% - 40px);
+}
+
+// .inner  (the circle itself)
+.nameImageInner {
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: url("/D10.jpg");
+  background-size: cover;
+  background-position: 50% 20%;
+}
+
+// .c-name__details  (brand name + tagline, col 3-5, rows 1-2)
+.nameDetails {
+  grid-column-start: 3;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 4px;
+}
+
+// .details-title  (@include heading-3 at desktop size)
+.detailsTitle {
+  // heading-3: 32px → 36px at >tablet, weight 500, -2px tracking
+  font-size: clamp(20px, 2.2vw, 36px);
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+// .details-jd  (@include paragraph)
+.detailsJd {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: normal;
+}
+
+// .credits-link  (small circle, col 1-2, row 10)
+// Styles from korty's _globals.scss .credits-link
+.creditsLink {
+  width: 90px;
+  height: 90px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 10;
+  border-radius: 50%;
+  position: relative;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  border: 1px solid #abb1ba;
+  background: transparent;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Layer 2 — hero-links  (z-index 1 over hero-content)
+// ─────────────────────────────────────────────────────────────────
+.heroLinks {
+  position: relative;
+  z-index: 1;
+}
+
+// .c-circular-link  (col 10-13, row 5)
+.circularLink {
+  grid-column-start: 10;
+  grid-column-end: 13;
+  grid-row-start: 5;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// .c-hoverlink  (base for all three hover links)
+// @include heading-2 + variableFonts(25,64) + flex(center)
+// ─────────────────────────────────────────────────────────────────
+.hoverlink {
+  // heading-2 inlined
+  letter-spacing: -5px;
+  font-weight: 300;
+  line-height: 100%;
+
+  // flex($align: center) inlined
+  display: flex;
+  align-items: center;
+
+  p {
+    // @include paragraph
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.1;
+    max-width: 210px;
+    width: 100%;
+  }
+}
+
+// .c-hoverlink.hover-link-1  (SHOP — col 3-14, rows 3-4)
+.hoverlink1 {
+  grid-column-start: 3;
+  grid-column-end: 14;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  position: relative;
+
+  p {
+    margin-right: 40px;
+    margin-top: 10px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: calc(10.3 / 11 * 100%);
+  }
+}
+
+// .c-hoverlink.hover-link-2  (LOOKBOOK — col 2-11, rows 6-7)
+.hoverlink2 {
+  grid-column-start: 2;
+  grid-column-end: 11;
+  grid-row-start: 6;
+  grid-row-end: 7;
+
+  p {
+    margin-left: 40px;
+  }
+}
+
+// .c-hoverlink.hover-link-3  (DROPS — col 3-11, rows 9-10)
+.hoverlink3 {
+  grid-column-start: 3;
+  grid-column-end: 11;
+  grid-row-start: 9;
+  grid-row-end: 10;
+}
+
+// .image-details  (thumbnail + description row in hover-link-3)
+.imageDetails {
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+
+  p {
+    max-width: 140px;
+    margin-right: 35px;
+  }
+}
+
+// .c-model__image  (90x90 thumbnail in hover-link-3)
+.modelImage {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+}

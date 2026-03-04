@@ -244,13 +244,7 @@ const CheckoutPage = () => {
   if (!isMounted) {
     return (
       <main className="w-full min-h-screen">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-          // logoWidth={120}
-          // logoHeight={120}
-        />
+        <Navbar variant="dark" />
         <div className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-48 mb-8"></div>
@@ -272,11 +266,7 @@ const CheckoutPage = () => {
   if (cartItems.length === 0) {
     return (
       <main className="w-full bg-white min-h-screen">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-        />
+        <Navbar variant="dark" />
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
           <h2 className="text-2xl font-bold text-black mb-4">
             Your cart is empty
@@ -298,11 +288,7 @@ const CheckoutPage = () => {
 
   return (
     <main className="w-full bg-white min-h-screen">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
 
       <div className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
         {/* Back Button */}

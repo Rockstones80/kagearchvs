@@ -38,11 +38,7 @@ const CartPage = () => {
   if (!isMounted) {
     return (
       <main className="w-full bg-white min-h-screen">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-        />
+        <Navbar variant="dark" />
         <div className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-64 mb-8"></div>
@@ -65,11 +61,7 @@ const CartPage = () => {
   if (cartItems.length === 0) {
     return (
       <main className="w-full bg-white min-h-screen">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-        />
+        <Navbar variant="dark" />
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
           <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
           <h2 className="text-2xl font-bold text-black mb-2">
@@ -92,11 +84,7 @@ const CartPage = () => {
 
   return (
     <main className="w-full bg-white min-h-screen">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
 
       <div className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
         <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 uppercase">

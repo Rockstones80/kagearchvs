@@ -106,13 +106,7 @@ const LookbookPage = () => {
 
   return (
     <main className="w-full  text-black">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-        // logoWidth={120}
-        // logoHeight={120}
-      />
+      <Navbar variant="dark" />
 
       {/* Intro Section */}
       <section className="mx-auto px-4 sm:px-6 pt-20 sm:pt-28 md:pt-36 pb-12 md:pb-20 md:px-10">

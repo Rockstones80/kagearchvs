@@ -1,85 +1,171 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import gsap from "gsap";
 import Navbar from "@/components/landing/navbar";
-// import Footer from "@/components/landing/footer";
-import { Bookmark } from "lucide-react";
 import { products } from "@/lib/products";
 
-const ShopPage = () => {
+export default function ShopPage() {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef   = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const cards = gridRef.current?.querySelectorAll(".product-card");
+
+    gsap.set(headerRef.current, { y: 30, opacity: 0 });
+    gsap.set(cards ?? [],       { y: 40, opacity: 0 });
+
+    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+    tl.to(headerRef.current, { y: 0, opacity: 1, duration: 1 })
+      .to(cards ?? [],       { y: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, "-=0.5");
+  }, []);
+
   return (
-    <main className="w-full bg-white">
-      <Navbar />
+    <main
+      className="shop-page"
+      style={{
+        background: "#fff",
+        minHeight:  "100vh",
+        fontFamily: "var(--font-grotesk)",
+      }}
+    >
+      <Navbar variant="dark" />
 
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[365px] overflow-hidden">
-        <Image
-          src="/hero-9.1.jpg"
-          alt="ComplexCon Drop"
-          fill
-          priority
-          className="object-cover object-center"
-          quality={100}
-        />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
-      </section>
+      {/* ── Page header ──────────────────────────────────────────────── */}
+      <div
+        ref={headerRef}
+        style={{
+          paddingTop:    "140px",
+          paddingBottom: "40px",
+          textAlign:     "center",
+        }}
+      >
+        <h1
+          style={{
+            fontSize:      "clamp(1.6rem, 3vw, 3.0rem)",
+            fontWeight:    500,
+            letterSpacing: "0.01em",
+            color:         "#111",
+            margin:        "0 0 12px",
+          }}
+        >
+          Products
+        </h1>
 
-      {/* Products Meta Bar */}
-      <section className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 pt-6 md:pt-10 gap-3 md:gap-4">
-        <div className="text-xs uppercase tracking-wide text-gray-700">
-          {products.length} products
-        </div>
-        {/* <button className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-700 hover:text-black transition-colors">
-          Filters &amp; Sorting
-          <span className="text-lg">≡</span>
-        </button> */}
-      </section>
+        {/* Breadcrumb */}
+        <p
+          style={{
+            fontSize:   "0.78rem",
+            color:      "#888",
+            margin:     0,
+            display:    "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap:        "6px",
+          }}
+        >
+          <Link href="/" style={{ color: "#888", textDecoration: "none" }}>
+            Home
+          </Link>
+          <span style={{ fontSize: "0.65rem" }}>›</span>
+          <span>Products</span>
+        </p>
+      </div>
 
-      {/* Products Grid */}
-      <section className="py-2">
-        <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-px">
+      {/* ── Products grid ─────────────────────────────────────────────── */}
+      <section
+        style={{
+          maxWidth: "1400px",
+          margin:   "0 auto",
+          padding:  "0 24px 80px",
+        }}
+      >
+        <div
+          ref={gridRef}
+          style={{
+            display:             "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap:                 "32px 16px",
+          }}
+          className="shop-grid"
+        >
           {products.map((product) => (
             <Link
               key={product.id}
               href={`/shop/${product.slug}`}
-              className="relative bg-white group"
+              className="product-card"
+              style={{ display: "block", textDecoration: "none" }}
             >
-              <div className="relative w-full aspect-3/4 overflow-hidden">
+              {/* Image */}
+              <div
+                className="product-img-wrap"
+                style={{
+                  position:    "relative",
+                  width:       "100%",
+                  aspectRatio: "3/4",
+                  overflow:    "hidden",
+                  background:  "#f0ede8",
+                }}
+              >
+                {/* Front image */}
                 <Image
                   src={product.image}
                   alt={product.title}
                   fill
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   quality={100}
+                  style={{
+                    objectFit:      "cover",
+                    objectPosition: "center top",
+                  }}
+                  className="product-img product-img-front"
                 />
 
-                {/* Badge */}
-                {product.badge && (
-                  <span className="absolute top-4 left-4 text-[10px] font-semibold text-black">
-                    {product.badge}
-                  </span>
+                {/* Back / hover image (only if a second image exists) */}
+                {product.images && product.images[1] && (
+                  <Image
+                    src={product.images[1]}
+                    alt={`${product.title} — back`}
+                    fill
+                    quality={100}
+                    style={{
+                      objectFit:      "cover",
+                      objectPosition: "center top",
+                    }}
+                    className="product-img product-img-back"
+                  />
                 )}
-
-                {/* Bookmark icon */}
-                {/* <button
-                  aria-label="Save product"
-                  className="absolute top-4 right-4 p-1 transition-colors z-10"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
-                  <Bookmark className="w-6 h-6 text-black/50" strokeWidth={1} />
-                </button> */}
               </div>
 
-              <div className="px-3 md:px-4 pt-1 pb-4 md:pb-7">
-                <h3 className="text-xs sm:text-sm font-extrabold text-black line-clamp-2">
+              {/* Info — centered */}
+              <div
+                style={{
+                  paddingTop: "14px",
+                  textAlign:  "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize:      "0.82rem",
+                    fontWeight:    600,
+                    color:         "#111",
+                    margin:        "0 0 5px",
+                    letterSpacing: "0.01em",
+                    lineHeight:    1.4,
+                  }}
+                >
                   {product.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-black mt-1">
+                </p>
+                <p
+                  style={{
+                    fontSize:   "0.82rem",
+                    fontWeight: 500,
+                    color:      "#555",
+                    margin:     0,
+                  }}
+                >
                   {product.price}
                 </p>
               </div>
@@ -87,9 +173,41 @@ const ShopPage = () => {
           ))}
         </div>
       </section>
-      {/* <Footer /> */}
+
+      <style>{`
+        .shop-page, .shop-page *,
+        .shop-page h1, .shop-page p, .shop-page a, .shop-page span {
+          font-family: var(--font-grotesk), "HK Grotesk", "Source Sans Pro", sans-serif !important;
+        }
+        @media (min-width: 768px) {
+          .shop-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 40px 24px !important;
+          }
+        }
+
+        /* ── Image swap on hover ── */
+        .product-img-front,
+        .product-img-back {
+          transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94) !important;
+        }
+        .product-img-back {
+          opacity: 0;
+        }
+        .product-card:hover .product-img-front {
+          opacity: 0;
+          transform: scale(1.04);
+        }
+        .product-card:hover .product-img-back {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+        /* fallback scale for single-image cards */
+        .product-card:hover .product-img-front:only-child {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+      `}</style>
     </main>
   );
-};
-
-export default ShopPage;
+}

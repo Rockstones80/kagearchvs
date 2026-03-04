@@ -6,11 +6,7 @@ import { ArrowLeft } from "lucide-react";
 export default function NotFound() {
   return (
     <main className="w-full text-black">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
       <section className="mx-auto w-full max-w-4xl px-6 pt-32 pb-24 md:px-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Post Not Found</h1>
         <p className="text-gray-600 mb-8">

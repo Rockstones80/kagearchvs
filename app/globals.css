@@ -1,32 +1,102 @@
 @import "tailwindcss";
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), sans-serif;
-}
-
-/* Custom Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  /* background: #888; */
-  border-radius: 4px;
-  border: none;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Firefox Scrollbar */
+/* ── Korty's --responsive custom property (from _globals.scss) ──
+   Formula: (--min-size * 0.06em) + (--max-size - --min-size) * ((100vw - 420px) / 780)
+   Matches variableFonts() SCSS mixin exactly.                                           */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: #888 transparent;
+  box-sizing: border-box;
+  --responsive: calc(
+    (var(--min-size) * 0.06em) + (var(--max-size) - var(--min-size)) *
+      ((100vw - 420px) / (1200 - 420))
+  );
+}
+
+/* Hide default cursor on fine-pointer devices */
+@media (any-pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f7f5f5;
+  color: #121821;
+  font-family: var(--font-grotesk), "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { border-radius: 4px; border: none; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+* { scrollbar-width: thin; scrollbar-color: #888 transparent; }
+
+/* ── Circular link rotation ── */
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Hover link font — matches Korty's .c-hoverlink variableFonts(25, 64) ──
+   Uses the --responsive formula above.
+   Set --min-size / --max-size here to activate.                              */
+.hover-link-text {
+  --min-size: 25;
+  --max-size: 64;
+  font-size: var(--responsive);
+  font-weight: 300;
+  letter-spacing: -5px;
+  line-height: 100%;
+}
+
+/* Responsive breakpoints matching Korty's _home.scss media queries */
+@media (min-width: 1200px) {
+  .hover-link-text {
+    --min-size: 35;
+    --max-size: 68;
+  }
+}
+@media (min-width: 1300px) {
+  .hover-link-text {
+    --min-size: 36;
+    --max-size: 74;
+  }
+}
+
+/* ── .menu__item / .menu__item-label — matches _globals.scss ── */
+.menu__item {
+  position: relative;
+}
+
+.menu__item-label {
+  color: #121821;
+}
+
+/* ── Entrance animation helpers — mirrors index.vue transitions ──
+   .span-overflow / .link-overflow mask the slide-in of .ov-inner    */
+.span-overflow {
+  overflow: hidden;
+}
+.span-overflow .ov-inner {
+  display: inline-block;
+}
+
+.link-overflow {
+  overflow: hidden;
+  display: inline-flex;
+}
+.link-overflow .ov-inner {
+  display: inline-flex;
 }

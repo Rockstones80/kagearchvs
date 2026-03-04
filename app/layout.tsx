@@ -1,17 +1,49 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { CartProvider } from "@/contexts/cart-context";
 import { Toaster } from "react-hot-toast";
+import CustomCursor from "@/components/ui/custom-cursor";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+// Exact same font files used in korty-eo (HK Grotesk by HVD Fonts)
+const hkGrotesk = localFont({
+  variable: "--font-grotesk",
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Grotesk/HKGrotesk-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Grotesk/HKGrotesk-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Grotesk/HKGrotesk-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Exact same Fraunces72pt files used in korty-eo
+const fraunces = localFont({
+  variable: "--font-fraunces",
+  display: "swap",
+  src: [
+    {
+      path: "./fonts/Fraunces/Fraunces72pt-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Fraunces/Fraunces72pt-LightItalic.woff2",
+      weight: "300",
+      style: "italic",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -26,8 +58,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${hkGrotesk.variable} ${fraunces.variable} antialiased`}>
         <CartProvider>
+          <CustomCursor />
           {children}
           <Toaster
             position="top-right"

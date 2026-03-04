@@ -1,6 +1,7 @@
 import React from "react";
-import Navbar from "@/components/landing/navbar";
 import Hero from "@/components/landing/hero";
+import Navbar from "@/components/landing/navbar";
+import IntroScreen from "@/components/ui/intro-screen";
 // import BlogSection from "@/components/landing/blog-section";
 // import Footer from "@/components/landing/footer";
 // import { client } from "@/sanity/lib/client";
@@ -28,6 +29,7 @@ const page = async () => {
 
   return (
     <div className="relative">
+      <IntroScreen />
       <Navbar />
       <Hero />
       {/* <BlogSection posts={blogPosts} /> */}

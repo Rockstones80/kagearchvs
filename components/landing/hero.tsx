@@ -1,60 +1,82 @@
-import React from "react";
-import Link from "next/link";
-// import Image from "next/image";
-import Slideshow from "../ui/slideshow";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import Slideshow from "@/components/ui/slideshow";
 
 const heroImages = [
-  { src: "/hero-9.3.jpg", alt: "Hero 1" },
-  { src: "/hero-9.2.jpg", alt: "Hero 2" },
-  { src: "/hero-9.4.jpg", alt: "Hero 3" },
+  { src: "/hero-a1.jpg", alt: "Hero 1" },
+  { src: "/hero-a2.jpg", alt: "Hero 2" },
+  { src: "/hero-a3.jpg", alt: "Hero 3" },
+  { src: "/hero-a4.jpg", alt: "Hero 4" },
+  { src: "/hero-a5.jpg", alt: "Hero 5" },
 ];
 
 const heroImagesMobile = [
-  { src: "/D10.jpg", alt: "Hero 4" },
-  { src: "/her0-9.5.png", alt: "Hero 2" },
-  { src: "/t1.jpg", alt: "Hero 3" },
+  { src: "/4.jpg",       alt: "Hero 3" },
+  { src: "/mobile-1.jpg",      alt: "Hero 4" },
+  { src: "/D10.jpg",      alt: "Hero 4" },
+  { src: "/mobile-2.jpg", alt: "Hero 2" },
 ];
 
-
 const Hero = () => {
+  const sectionRef   = useRef<HTMLElement>(null);
+  const overlayRef   = useRef<HTMLDivElement>(null);
+  const logoRef      = useRef<HTMLDivElement>(null);
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.set(sectionRef.current,   { opacity: 0 });
+    gsap.set(imageWrapRef.current, { scale: 1.08 });
+    gsap.set(overlayRef.current,   { opacity: 0 });
+    gsap.set(logoRef.current,      { opacity: 0, y: 16 });
+
+    const runEntrance = () => {
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+      tl.to(sectionRef.current,   { opacity: 1, duration: 0.01 });
+      tl.to(imageWrapRef.current, { scale: 1, duration: 1.8 }, 0);
+      tl.to(overlayRef.current,   { opacity: 1, duration: 1.2 }, 0);
+      tl.to(logoRef.current,      { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.4);
+    };
+
+    window.addEventListener("intro:done", runEntrance, { once: true });
+    return () => window.removeEventListener("intro:done", runEntrance);
+  }, []);
+
   return (
-    <section className="relative w-full h-screen overflow-hidden pt-10">
-      {/* {/* Mobile/Tablet: Single static image */}
-      <div className="absolute inset-0 w-full h-full md:hidden block">
-      <Slideshow
-          images={heroImagesMobile}
-          interval={5000}
-          transitionDuration={1000}
-        />
-      </div> 
+    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden">
 
-      {/* Desktop: Slideshow */}
-      <div className=" absolute inset-0 w-full h-full hidden md:block">
-        <Slideshow
-          images={heroImages}
-          interval={5000}
-          transitionDuration={1000}
-        />
-      </div>
-
-      {/* Dark overlay to reduce image brightness */}
-      <div className="absolute inset-0 bg-black/20 z-20"></div>
-
-      {/* Text overlay */}
-      <div className="absolute inset-0 z-30 flex items-end">
-        <div className="w-full px-2 md:px-3 text-white">
-            <h1 className="text-[16px] md:text-[30px] font-extrabold md:font-bold uppercase tracking-tight">
-              ALL PRODUCTS
-            </h1>
-          <Link
-            href="/shop"
-            className="items-center gap-2 text-xs font-medium uppercase tracking-wide text-white hover:text-white/80 transition-colors"
-          >
-            Shop now
-            <span className="text-base sm:text-lg md:text-xl hidden md:inline-flex">→</span>
-          </Link>
+      {/* Images */}
+      <div ref={imageWrapRef} className="absolute inset-0 w-full h-full">
+        <div className="md:hidden block absolute inset-0 w-full h-full">
+          <Slideshow images={heroImagesMobile} interval={5000} transitionDuration={1000} />
+        </div>
+        <div className="hidden md:block absolute inset-0 w-full h-full">
+          <Slideshow images={heroImages} interval={5000} transitionDuration={1000} />
         </div>
       </div>
+
+      {/* Dark tint */}
+      <div ref={overlayRef} className="absolute inset-0 bg-black/25 z-20" />
+
+      {/* Centered white logo */}
+      <div
+        ref={logoRef}
+        className="absolute inset-0 z-30 flex items-center justify-center"
+      >
+        <Image
+          src="/navbar.png"
+          alt="KAGEARCHVS"
+          width={400}
+          height={100}
+          className="brightness-0 invert w-[240px] md:w-[400px] h-auto"
+          style={{ opacity: 0.55 }}
+          priority
+        />
+      </div>
+
     </section>
   );
 };

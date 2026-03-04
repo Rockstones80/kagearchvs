@@ -49,11 +49,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <main className="w-full text-black">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
 
       {/* Back Button */}
       <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 pt-16 sm:pt-20 md:pt-24 pb-6 md:pb-8 md:px-12">

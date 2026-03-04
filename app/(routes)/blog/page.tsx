@@ -32,11 +32,7 @@ const Page = async () => {
   if (blogPosts.length === 0) {
     return (
       <main className="w-full text-black">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-        />
+        <Navbar variant="dark" />
         <section className="mx-auto w-full max-w-7xl px-6 pt-32 pb-12 md:px-12">
           <p className="text-center text-gray-600">
             No blog posts found. Create your first post in Sanity Studio!
@@ -49,11 +45,7 @@ const Page = async () => {
 
   return (
     <main className="w-full text-black">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
       {/* Hero Section with Featured Blog */}
       <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-8 md:pb-12 md:px-12">
         {/* <h1 className="text-4xl md:text-5xl font-bold mb-8 text-black">

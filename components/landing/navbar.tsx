@@ -1,170 +1,216 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { navItems } from "@/constants/nav-items";
-import { navIcons } from "@/constants/nav-icons";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import gsap from "gsap";
 import { useCart } from "@/contexts/cart-context";
 
+const NAV_LINKS = [
+  { href: "/",         label: "Home"     },
+  { href: "/shop",     label: "Shop"     },
+  { href: "/lookbook", label: "Lookbook" },
+  { href: "/cart",     label: "My Cart"  },
+];
+
 interface NavbarProps {
-  textClass?: string;
-  iconClass?: string;
-  logoSrc?: string;
-  logoWidth?: number;
-  logoHeight?: number;
+  /** "light" = white lines (homepage over dark hero)
+   *  "dark"  = black lines + black logo (shop / inner pages) */
+  variant?: "light" | "dark";
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  textClass = "text-gray-300",
-  iconClass = "text-gray-300",
-  logoSrc = "/navbar.png",
-  logoWidth = 200,
-  logoHeight = 150,
-}) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export default function Navbar({ variant = "light" }: NavbarProps) {
   const { getTotalItems } = useCart();
   const cartItemCount = getTotalItems();
 
+  const [open, setOpen] = useState(false);
+
+  const navBarRef    = useRef<HTMLDivElement>(null);
+  const dropdownRef  = useRef<HTMLDivElement>(null);
+  const menuLinksRef = useRef<HTMLLIElement[]>([]);
+  const line1Ref     = useRef<HTMLSpanElement>(null);
+  const line2Ref     = useRef<HTMLSpanElement>(null);
+  const line3Ref     = useRef<HTMLSpanElement>(null);
+
+  const lineColor = variant === "dark" ? "#111" : "#fff";
+
+  /* ── Hide on scroll ─────────────────────────────────────────────────────── */
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    let lastY = 0;
+    let hidden = false;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        setIsVisible(true);
+    const onScroll = () => {
+      if (open) return;                     // never hide while menu is open
+      const y = window.scrollY;
+      const down = y > lastY && y > 60;
+
+      if (down && !hidden) {
+        gsap.to(navBarRef.current, { y: "-100%", duration: 0.4, ease: "power2.inOut" });
+        hidden = true;
+      } else if (!down && hidden) {
+        gsap.to(navBarRef.current, { y: "0%", duration: 0.4, ease: "power2.out" });
+        hidden = false;
       }
-
-      setLastScrollY(currentScrollY);
+      lastY = y;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY]);
+  /* ── Menu open / close ──────────────────────────────────────────────────── */
+  const openMenu = () => {
+    setOpen(true);
+    gsap.set(dropdownRef.current, { display: "block" });
+
+    const tl = gsap.timeline();
+    tl.fromTo(dropdownRef.current,
+      { opacity: 0, y: -12, pointerEvents: "none" },
+      { opacity: 1, y: 0, duration: 0.45, ease: "expo.out", pointerEvents: "auto" }
+    );
+    tl.fromTo(menuLinksRef.current,
+      { x: -16, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.4, stagger: 0.07, ease: "expo.out" },
+      "-=0.25"
+    );
+    tl.to(line1Ref.current, { rotate: 45,  y: 7,  duration: 0.3, ease: "power2.inOut" }, 0);
+    tl.to(line2Ref.current, { opacity: 0,          duration: 0.15 }, 0);
+    tl.to(line3Ref.current, { rotate: -45, y: -7, duration: 0.3, ease: "power2.inOut" }, 0);
+  };
+
+  const closeMenu = () => {
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setOpen(false);
+        gsap.set(dropdownRef.current, { display: "none" });
+      },
+    });
+    tl.to(dropdownRef.current, { opacity: 0, y: -10, duration: 0.35, ease: "power2.in" });
+    tl.to(line1Ref.current, { rotate: 0, y: 0, duration: 0.3, ease: "power2.inOut" }, 0);
+    tl.to(line2Ref.current, { opacity: 1,       duration: 0.2, delay: 0.1 }, 0);
+    tl.to(line3Ref.current, { rotate: 0, y: 0, duration: 0.3, ease: "power2.inOut" }, 0);
+  };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-xs md:bg-transparent transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
-    >
-      <div className="max-w-[1920px] mx-auto px-4">
-        <div className="flex items-center justify-between h-12">
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden ${iconClass}`}
-            aria-label="Toggle menu"
+    <>
+      {/* ── Nav bar strip ────────────────────────────────────────────────── */}
+      <div
+        ref={navBarRef}
+        style={{
+          position:       "fixed",
+          top:            0,
+          left:           0,
+          right:          0,
+          height:         "72px",
+          zIndex:         60,
+          display:        "flex",
+          alignItems:     "center",
+          justifyContent: "space-between",
+          padding:        "0 32px",
+        }}
+      >
+        {/* Left — hamburger */}
+        <button
+          onClick={open ? closeMenu : openMenu}
+          aria-label="Toggle menu"
+          style={{
+            display:        "flex",
+            flexDirection:  "column",
+            justifyContent: "center",
+            gap:            "6px",
+            width:          "32px",
+            background:     "none",
+            border:         "none",
+            cursor:         "pointer",
+            padding:        0,
+            flexShrink:     0,
+          }}
+        >
+          <span ref={line1Ref} style={{ display: "block", height: "2.5px", width: "100%", background: lineColor, transformOrigin: "center" }} />
+          <span ref={line2Ref} style={{ display: "block", height: "2.5px", width: "100%", background: lineColor, transformOrigin: "center" }} />
+          <span ref={line3Ref} style={{ display: "block", height: "2.5px", width: "60%",  background: lineColor, transformOrigin: "center" }} />
+        </button>
+
+        {/* Center — logo (dark variant only) */}
+        {variant === "dark" && (
+          <div
+            style={{
+              position:  "absolute",
+              left:      "50%",
+              top:       "50%",
+              transform: "translate(-50%, -50%)",
+            }}
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-
-          {/* Left Navigation Links - Desktop */}
-          <div className="hidden md:flex items-center gap-4 lg:gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`${textClass} text-[10px] uppercase hover:opacity-70 transition-opacity ${
-                  item.visibilityClass || ""
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Center Logo */}
-          <Link
-            href="/"
-            className="absolute left-1/2 transform -translate-x-1/2 cursor-pointer"
-          >
-            <Image
-              src={logoSrc}
-              alt="KAGEARCHVS"
-              width={logoWidth}
-              height={logoHeight}
-              className="w-32 h-auto md:w-[170px] md:h-auto"
-              priority
-            />
-          </Link>
-
-          {/* Right Utility Icons */}
-          <div className="flex items-center gap-3 md:gap-4 lg:gap-8">
-            {navIcons.map((item, index) => {
-              // Cart icon should link to cart page
-              if (index === navIcons.length - 1) {
-                return (
-                  <Link
-                    key={index}
-                    href="/cart"
-                    className={`relative hover:opacity-70 transition-opacity ${iconClass}`}
-                  >
-                    <item.Icon
-                      {...item.iconProps}
-                      className="w-5 h-5 md:w-6 md:h-6"
-                    />
-                    {cartItemCount > 0 && (
-                      <span
-                        className="absolute -top-1 -right-1 bg-black text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
-                        suppressHydrationWarning
-                      >
-                        {cartItemCount > 9 ? "9+" : cartItemCount}
-                      </span>
-                    )}
-                  </Link>
-                );
-              }
-              return (
-                <button
-                  key={index}
-                  className={`hover:opacity-70 transition-opacity ${iconClass}`}
-                >
-                  <item.Icon
-                    {...item.iconProps}
-                    className="w-5 h-5 md:w-6 md:h-6"
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden ">
-            <div className="flex flex-col py-4 space-y-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`${textClass} text-sm uppercase px-4 py-2 hover:opacity-70 transition-opacity ${
-                    item.visibilityClass || ""
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+            <Link href="/">
+              <Image
+                src="/navbar.png"
+                alt="kagearchvs"
+                width={250}
+                height={48}
+                style={{ objectFit: "contain", filter: "brightness(0)", opacity: 0.7, display: "block" }}
+              />
+            </Link>
           </div>
         )}
-      </div>
-    </nav>
-  );
-};
 
-export default Navbar;
+        {/* Right — spacer to keep hamburger balanced */}
+        <div style={{ width: "32px", flexShrink: 0 }} />
+      </div>
+
+      {/* ── Dropdown menu ────────────────────────────────────────────────── */}
+      <div
+        ref={dropdownRef}
+        style={{
+          display:              "none",
+          position:             "fixed",
+          top:                  "80px",
+          left:                 "32px",
+          zIndex:               50,
+          background:           variant === "dark"
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(255, 255, 255, 0.55)",
+          backdropFilter:       "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderRadius:         "4px",
+          padding:              "24px 40px 24px 28px",
+          minWidth:             "200px",
+          boxShadow:            variant === "dark" ? "0 4px 24px rgba(0,0,0,0.08)" : "none",
+        }}
+      >
+        <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+          {NAV_LINKS.map(({ href, label }, i) => {
+            const displayLabel = label === "My Cart" && cartItemCount > 0
+              ? `My Cart (${cartItemCount})`
+              : label;
+            return (
+              <li
+                key={label}
+                ref={(el) => { if (el) menuLinksRef.current[i] = el; }}
+                style={{ marginBottom: i < NAV_LINKS.length - 1 ? "20px" : 0 }}
+              >
+                <Link
+                  href={href}
+                  onClick={closeMenu}
+                  style={{
+                    fontFamily:    "var(--font-grotesk)",
+                    fontSize:      "clamp(0.95rem, 2vw, 1.15rem)",
+                    fontWeight:    700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                    color:         variant === "dark" ? "#111" : "#444",
+                    display:       "block",
+                    transition:    "opacity 0.2s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = "0.4")}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+                >
+                  {displayLabel}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
+  );
+}

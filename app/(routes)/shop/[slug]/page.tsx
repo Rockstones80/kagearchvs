@@ -32,11 +32,7 @@ const ProductPage = () => {
   if (!product) {
     return (
       <main className="w-full bg-white min-h-screen">
-        <Navbar
-          textClass="text-gray-700 font-medium"
-          iconClass="text-gray-700"
-          logoSrc="/logo-2.png"
-        />
+        <Navbar variant="dark" />
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
           <h2 className="text-2xl font-bold text-black mb-4">
             Product Not Found
@@ -129,11 +125,7 @@ const ProductPage = () => {
 
   return (
     <main className="w-full bg-white min-h-screen">
-      <Navbar
-        textClass="text-gray-700 font-medium"
-        iconClass="text-gray-700"
-        logoSrc="/logo-2.png"
-      />
+      <Navbar variant="dark" />
 
       <div className="max-w-6xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
         {/* Back Button */}
