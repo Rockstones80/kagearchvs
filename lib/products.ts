@@ -50,12 +50,12 @@ export const products: Product[] = [
     slug: "kagearchvs-broken-angels-sleeveless",
     title: "KAGEARCHVS BROKEN ANGELS SLEEVELESS",
     price: "₦27,999.99",
-    image: "/shop/sleeveless/IMG_1978.JPG",
+    image: "/shop/sleeveless/IMG_1978.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/sleeveless/IMG_1978.JPG",
-      "/shop/sleeveless/IMG_1984.JPG",
+      "/shop/sleeveless/IMG_1978.jpg",
+      "/shop/sleeveless/IMG_1984.jpg",
       "/shop/sleeveless/IMG_0811.png",
       "/shop/sleeveless/IMG_0812.png",
 
@@ -75,11 +75,11 @@ export const products: Product[] = [
     slug: "kagearchvs-broken-angels-hoodie",
     title: "KAGEARCHVS BROKEN ANGELS HOODIE",
     price: "₦49,999.99",
-    image: "/shop/kagehoodie/hoodie.JPG",
+    image: "/shop/kagehoodie/hoodie.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/kagehoodie/hoodie.JPG",
+      "/shop/kagehoodie/hoodie.jpg",
       "/shop/kagehoodie/hoodie_1.jpg",
       "/shop/shop-6.jpg",
     ],
@@ -95,11 +95,11 @@ export const products: Product[] = [
     slug: "kagearchvs-time-tee",
     title: "KAGEARCHVS TIME TEE",
     price: "₦29,999.99",
-    image: "/shop/time/time.JPG",
+    image: "/shop/time/time.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/time/time.JPG",
+      "/shop/time/time.jpg",
       "/shop/time/IMG_3343.png",
       "/shop/time/IMG_3344.png",
     ],
@@ -118,11 +118,11 @@ export const products: Product[] = [
     slug: "kagearchvs-world-domination-tee",
     title: "KAGEARCHVS WORLD DOMINATION TEE",
     price: "₦24,999.99",
-    image: "/shop/world/world.JPG",
+    image: "/shop/world/world.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/world/world.JPG",
+      "/shop/world/world.jpg",
       "/shop/world/IMG_3342.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -140,11 +140,11 @@ export const products: Product[] = [
     slug: "kagearchvs-the-dreaming-tee",
     title: "KAGEARCHVS THE DREAMING TEE",
     price: "₦22,999.99",
-    image: "/shop/dream/dream.JPG",
+    image: "/shop/dream/dream.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/dream/dream.JPG",
+      "/shop/dream/dream.jpg",
       "/shop/dream/IMG_0806.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -162,11 +162,11 @@ export const products: Product[] = [
     slug: "kagearchvs-psycho-tee",
     title: "KAGEARCHVS PSYCHO TEE",
     price: "₦24,999.99",
-    image: "/shop/pyscho/IMG_2045.JPG",
+    image: "/shop/pyscho/IMG_2045.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/pyscho/IMG_2045.JPG",
+      "/shop/pyscho/IMG_2045.jpg",
       "/shop/pyscho/IMG_3341.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -184,11 +184,11 @@ export const products: Product[] = [
     slug: "kagearchvs-retail-therapy-tee",
     title: "KAGEARCHVS RETAIL THERAPY TEE",
     price: "₦22,999.99",
-    image: "/shop/retail/retail.JPG",
+    image: "/shop/retail/retail.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/retail/retail.JPG",
+      "/shop/retail/retail.jpg",
       "/shop/retail/IMG_0805.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
@@ -206,11 +206,11 @@ export const products: Product[] = [
     slug: "kagearchvs-surfer-tee",
     title: "KAGEARCHVS SURFER TEE",
     price: "₦24,999.99",
-    image: "/shop/surfer/sur.JPG",
+    image: "/shop/surfer/sur.jpg",
     description:
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: [
-      "/shop/surfer/sur.JPG",
+      "/shop/surfer/sur.jpg",
       "/shop/surfer/IMG_3340.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
