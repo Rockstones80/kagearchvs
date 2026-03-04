@@ -38,7 +38,7 @@ export default function ShopPage() {
       <div
         ref={headerRef}
         style={{
-          paddingTop:    "140px",
+          paddingTop:    "40px",
           paddingBottom: "40px",
           textAlign:     "center",
         }}

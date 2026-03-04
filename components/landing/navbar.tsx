@@ -14,8 +14,8 @@ const NAV_LINKS = [
 ];
 
 interface NavbarProps {
-  /** "light" = white lines (homepage over dark hero)
-   *  "dark"  = black lines + black logo (shop / inner pages) */
+  /** "light" = white lines, fixed overlay (homepage over dark hero)
+   *  "dark"  = black lines + black logo, static in page flow (inner pages) */
   variant?: "light" | "dark";
 }
 
@@ -33,14 +33,17 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
   const line3Ref     = useRef<HTMLSpanElement>(null);
 
   const lineColor = variant === "dark" ? "#111" : "#fff";
+  const isFixed   = variant === "light"; // only homepage navbar is fixed
 
-  /* ── Hide on scroll ─────────────────────────────────────────────────────── */
+  /* ── Hide on scroll — light/fixed only ─────────────────────────────────── */
   useEffect(() => {
+    if (!isFixed) return;
+
     let lastY = 0;
     let hidden = false;
 
     const onScroll = () => {
-      if (open) return;                     // never hide while menu is open
+      if (open) return;
       const y = window.scrollY;
       const down = y > lastY && y > 60;
 
@@ -56,7 +59,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [open]);
+  }, [open, isFixed]);
 
   /* ── Menu open / close ──────────────────────────────────────────────────── */
   const openMenu = () => {
@@ -92,15 +95,16 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
   };
 
   return (
-    <>
-      {/* ── Nav bar strip ────────────────────────────────────────────────── */}
+    /* Wrapper needed so dropdown can be position:absolute relative to the nav */
+    <div style={{ position: "relative" }}>
+      {/* ── Nav bar strip ──────────────────────────────────────────────────── */}
       <div
         ref={navBarRef}
         style={{
-          position:       "fixed",
-          top:            0,
-          left:           0,
-          right:          0,
+          position:       isFixed ? "fixed" : "relative",
+          top:            isFixed ? 0 : undefined,
+          left:           isFixed ? 0 : undefined,
+          right:          isFixed ? 0 : undefined,
           height:         "72px",
           zIndex:         60,
           display:        "flex",
@@ -153,7 +157,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           </div>
         )}
 
-        {/* Right — spacer to keep hamburger balanced */}
+        {/* Right — spacer */}
         <div style={{ width: "32px", flexShrink: 0 }} />
       </div>
 
@@ -162,9 +166,9 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
         ref={dropdownRef}
         style={{
           display:              "none",
-          position:             "fixed",
-          top:                  "80px",
-          left:                 "32px",
+          position:             "absolute",
+          top:                  "72px",
+          left:                 "16px",
           zIndex:               50,
           background:           variant === "dark"
             ? "rgba(255, 255, 255, 0.95)"
@@ -211,6 +215,6 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           })}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
