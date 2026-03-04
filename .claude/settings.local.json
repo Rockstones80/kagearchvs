@@ -60,7 +60,11 @@
       "Bash(grep -n \"Navbar\" /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/cart/page.tsx /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/lookbook/page.tsx /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/shop/[slug]/page.tsx)",
       "Bash(grep -n -A2 \"<Navbar\" /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/lookbook/page.tsx /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/shop/[slug]/page.tsx /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/checkout/page.tsx /c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/app/\\\\\\(routes\\\\\\)/blog/page.tsx)",
       "Bash(npm run build)",
-      "Bash(perl -i -pe 's/\\\\.JPG/.jpg/g; s/\\\\.PNG/.png/g' \"/c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/lib/products.ts\")"
+      "Bash(perl -i -pe 's/\\\\.JPG/.jpg/g; s/\\\\.PNG/.png/g' \"/c/Users/HP 1030 G3/Desktop/Workspace/kagearchvs/lib/products.ts\")",
+      "Bash(git config core.ignorecase false)",
+      "Bash(git add -A public/shop/ public/)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ]
   }
 }
