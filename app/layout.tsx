@@ -63,29 +63,37 @@ export default function RootLayout({
           <CustomCursor />
           {children}
           <Toaster
-            position="top-right"
+            position="bottom-center"
             reverseOrder={false}
             toastOptions={{
-              duration: 4000,
+              duration: 3500,
               style: {
-                background: "#fff",
-                color: "#000",
-                padding: "16px",
-                borderRadius: "8px",
-                border: "1px solid #e5e7eb",
+                background:    "#111",
+                color:         "#fff",
+                padding:       "14px 20px",
+                borderRadius:  "999px",
+                fontSize:      "0.82rem",
+                fontWeight:    500,
+                letterSpacing: "0.02em",
+                boxShadow:     "0 8px 32px rgba(0,0,0,0.18)",
+                fontFamily:    "var(--font-grotesk), sans-serif",
+                maxWidth:      "360px",
               },
               success: {
-                duration: 5000,
+                duration: 3500,
                 iconTheme: {
-                  primary: "#10b981",
-                  secondary: "#fff",
+                  primary: "#fff",
+                  secondary: "#111",
                 },
               },
               error: {
-                duration: 6000,
+                duration: 4500,
                 iconTheme: {
-                  primary: "#ef4444",
-                  secondary: "#fff",
+                  primary: "#fff",
+                  secondary: "#e53e3e",
+                },
+                style: {
+                  background: "#e53e3e",
                 },
               },
             }}
