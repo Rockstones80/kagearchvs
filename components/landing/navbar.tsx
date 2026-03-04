@@ -106,7 +106,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           display:        "flex",
           alignItems:     "center",
           justifyContent: "space-between",
-          padding:        "0 32px",
+          padding:        "0 16px",
         }}
       >
         {/* Left — hamburger */}
