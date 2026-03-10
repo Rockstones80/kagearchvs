@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/contexts/cart-context";
 import { Toaster } from "react-hot-toast";
 import CustomCursor from "@/components/ui/custom-cursor";
+import { Analytics } from "@vercel/analytics/react";
 
 // Exact same font files used in korty-eo (HK Grotesk by HVD Fonts)
 const hkGrotesk = localFont({
@@ -62,6 +63,7 @@ export default function RootLayout({
         <CartProvider>
           <CustomCursor />
           {children}
+          <Analytics />
           <Toaster
             position="bottom-center"
             reverseOrder={false}
