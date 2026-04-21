@@ -147,7 +147,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           >
             <Link href="/">
               <Image
-                src="/navbar.png"
+                src="/logoweb-02.png"
                 alt="kagearchvs"
                 width={250}
                 height={48}

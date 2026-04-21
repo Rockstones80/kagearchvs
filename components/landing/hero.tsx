@@ -69,7 +69,7 @@ const Hero = () => {
       >
         <Link href="/shop">
           <Image
-            src="/navbar.png"
+            src="/logoweb-02.png"
             alt="KAGEARCHVS"
             width={400}
             height={100}
