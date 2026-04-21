@@ -18,6 +18,7 @@ export interface Product {
   sizes?: string[];
   colors?: string[];
   sizeGuide?: SizeGuide[];
+  outOfStock?: boolean;
 }
 
 export const products: Product[] = [
@@ -44,6 +45,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "2",
@@ -69,6 +71,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "3",
@@ -89,6 +92,7 @@ export const products: Product[] = [
       { size: "M", length: "50", chest: "42", shoulder: "34" },
       { size: "L", length: "52", chest: "44", shoulder: "35" },
     ],
+    outOfStock: true,
   },
   {
     id: "4",
@@ -112,6 +116,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "5",
@@ -134,6 +139,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "6",
@@ -156,6 +162,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "7",
@@ -178,6 +185,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "8",
@@ -200,6 +208,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
   {
     id: "9",
@@ -222,6 +231,7 @@ export const products: Product[] = [
       { size: "2XL", length: "80", chest: "65", shoulderWidth: "54" },
       { size: "3XL", length: "83", chest: "68", shoulderWidth: "57" },
     ],
+    outOfStock: true,
   },
 ];
 
