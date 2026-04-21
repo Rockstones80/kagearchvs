@@ -102,8 +102,6 @@ const LookbookPage = () => {
     };
   }, [selectedIndex, closeViewer, showPrev, showNext]);
 
-  const heightPattern = [220, 400, 300, 520, 260, 460, 340, 200];
-
   return (
     <main className="w-full  text-black">
       <Navbar variant="dark" />
@@ -127,14 +125,11 @@ const LookbookPage = () => {
 
       {/* Image Grid */}
       <section className="px-2 sm:px-4 pb-16 md:pb-32 md:px-8">
-        <div className="columns-2 gap-4 sm:gap-7 space-y-4 sm:space-y-7 sm:columns-2 lg:columns-3 xl:columns-5">
+        <div className="grid grid-cols-2 gap-4 sm:gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {lookbookImages.map((image, index) => (
             <div
               key={index}
-              className="group relative mb-7 block w-full cursor-pointer break-inside-avoid overflow-hidden  border border-black/5 shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
-              style={{
-                height: `${heightPattern[index % heightPattern.length]}px`,
-              }}
+              className="group relative block w-full aspect-4/5 cursor-pointer overflow-hidden border border-black/5 shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
               onClick={() => setSelectedIndex(index)}
               role="button"
               tabIndex={0}
