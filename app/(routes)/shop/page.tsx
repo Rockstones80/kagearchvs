@@ -1,15 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import Navbar from "@/components/landing/navbar";
-import { products } from "@/lib/products";
+import { products, isComingSoon, type Product } from "@/lib/products";
 
 export default function ShopPage() {
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef   = useRef<HTMLDivElement>(null);
+
+  // Live stock for stock-managed products: slug → size → qty
+  const [stock, setStock] = useState<Record<string, Record<string, number>> | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/stock")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.stock) setStock(data.stock);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const badgeFor = (product: Product): string | null => {
+    if (isComingSoon(product)) return "Drops July 16";
+    if (product.outOfStock) return "Sold Out";
+    if (product.stockManaged && stock) {
+      const sizes = stock[product.slug];
+      const total = sizes
+        ? Object.values(sizes).reduce((sum, n) => sum + n, 0)
+        : null;
+      if (total === 0) return "Sold Out";
+    }
+    return null;
+  };
 
   useEffect(() => {
     const cards = gridRef.current?.querySelectorAll(".product-card");
@@ -46,10 +75,10 @@ export default function ShopPage() {
         <h1
           style={{
             fontSize:      "clamp(1.6rem, 3vw, 3.0rem)",
-            fontWeight:    500,
+            fontWeight:    600,
             letterSpacing: "0.01em",
             color:         "#111",
-            margin:        "0 0 12px",
+            margin:        "0 0",
           }}
         >
           Products
@@ -123,22 +152,7 @@ export default function ShopPage() {
                   className="product-img product-img-front"
                 />
 
-                {/* Back / hover image (only if a second image exists) */}
-                {product.images && product.images[1] && (
-                  <Image
-                    src={product.images[1]}
-                    alt={`${product.title} — back`}
-                    fill
-                    quality={100}
-                    style={{
-                      objectFit:      "cover",
-                      objectPosition: "center top",
-                    }}
-                    className="product-img product-img-back"
-                  />
-                )}
-
-                {product.outOfStock && (
+                {badgeFor(product) && (
                   <span
                     style={{
                       position:      "absolute",
@@ -154,7 +168,7 @@ export default function ShopPage() {
                       zIndex:        2,
                     }}
                   >
-                    Sold Out
+                    {badgeFor(product)}
                   </span>
                 )}
               </div>
@@ -204,28 +218,6 @@ export default function ShopPage() {
             grid-template-columns: repeat(4, 1fr) !important;
             gap: 40px 24px !important;
           }
-        }
-
-        /* ── Image swap on hover ── */
-        .product-img-front,
-        .product-img-back {
-          transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94) !important;
-        }
-        .product-img-back {
-          opacity: 0;
-        }
-        .product-card:hover .product-img-front {
-          opacity: 0;
-          transform: scale(1.04);
-        }
-        .product-card:hover .product-img-back {
-          opacity: 1;
-          transform: scale(1.04);
-        }
-        /* fallback scale for single-image cards */
-        .product-card:hover .product-img-front:only-child {
-          opacity: 1;
-          transform: scale(1.04);
         }
       `}</style>
     </main>

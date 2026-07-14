@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/landing/navbar";
 // import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
-import { getProductBySlug } from "@/lib/products";
-import Slideshow from "@/components/ui/slideshow";
+import { getProductBySlug, isComingSoon } from "@/lib/products";
 import { Minus, Plus, X, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -24,6 +23,40 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [showSizeGuide, setShowSizeGuide] = useState<boolean>(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  // Live per-size stock for stock-managed products (null = not loaded/unknown)
+  const [sizeStock, setSizeStock] = useState<Record<string, number> | null>(null);
+
+  useEffect(() => {
+    if (!product?.stockManaged) return;
+    const sizes = product.sizes;
+    let cancelled = false;
+    fetch(`/api/stock?slug=${encodeURIComponent(product.slug)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { sizes?: Record<string, number> } | null) => {
+        if (cancelled || !data?.sizes) return;
+        const stock = data.sizes;
+        setSizeStock(stock);
+        // Make sure a sold-out size isn't preselected
+        setSelectedSize((prev) => {
+          if ((stock[prev] ?? 0) > 0) return prev;
+          return sizes?.find((s) => (stock[s] ?? 0) > 0) ?? prev;
+        });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [product?.stockManaged, product?.slug, product?.sizes]);
+
+  const comingSoon = product ? isComingSoon(product) : false;
+  const stockOf = (size: string): number | undefined =>
+    product?.stockManaged && sizeStock ? sizeStock[size] ?? 0 : undefined;
+  const soldOut =
+    !!product?.stockManaged &&
+    !!sizeStock &&
+    (product.sizes ?? []).every((s) => (sizeStock[s] ?? 0) === 0);
+  const selectedStock = stockOf(selectedSize);
 
   const toggleAccordion = (section: string) => {
     setOpenAccordion(openAccordion === section ? null : section);
@@ -53,6 +86,15 @@ const ProductPage = () => {
   }
 
   const handleAddToCart = () => {
+    if (selectedStock !== undefined && quantity > selectedStock) {
+      toast.error(
+        selectedStock === 0
+          ? `Size ${selectedSize} is sold out`
+          : `Only ${selectedStock} left in size ${selectedSize}`
+      );
+      return;
+    }
+
     // Add the product multiple times based on quantity
     // The cart context will merge them into one item with correct quantity
     for (let i = 0; i < quantity; i++) {
@@ -82,6 +124,15 @@ const ProductPage = () => {
   };
 
   const handleBuyNow = () => {
+    if (selectedStock !== undefined && quantity > selectedStock) {
+      toast.error(
+        selectedStock === 0
+          ? `Size ${selectedSize} is sold out`
+          : `Only ${selectedStock} left in size ${selectedSize}`
+      );
+      return;
+    }
+
     // Add to cart first
     for (let i = 0; i < quantity; i++) {
       addToCart({
@@ -107,7 +158,10 @@ const ProductPage = () => {
   };
 
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prev) => {
+      if (selectedStock !== undefined && prev >= selectedStock) return prev;
+      return prev + 1;
+    });
   };
 
   const decreaseQuantity = () => {
@@ -116,47 +170,30 @@ const ProductPage = () => {
     }
   };
 
-  const productImages = Array.from(
-    new Set([product.image, ...(product.images ?? [])].filter(Boolean))
-  ).map((src) => ({
-    src,
-    alt: product.title,
-  }));
-
   return (
     <main className="w-full bg-white min-h-screen">
       <Navbar variant="dark" />
 
-      <div className="max-w-6xl mx-auto px-4 pt-24 md:pt-28 pb-8 md:pb-12">
+      <div className="max-w-6xl mx-auto px-4 pt-24 md:pt-20 pb-8 md:pb-12">
         {/* Back Button */}
-        {/* <Link
+        <Link
           href="/shop"
-          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-black mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-medium tracking-widest text-gray-700 hover:text-black uppercase mb-8 transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Shop
-        </Link> */}
+          <span aria-hidden="true">←</span> Back
+        </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
             <div className="relative w-full bg-gray-100 overflow-hidden" style={{ aspectRatio: "4/5" }}>
-              {productImages.length > 1 ? (
-                <Slideshow
-                  images={productImages}
-                  interval={3000}
-                  transitionDuration={600}
-                  className=""
-                />
-              ) : (
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              )}
+              <Image
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover"
+                priority
+              />
               {/* {product.badge && (
                 <span className="absolute top-4 left-4 text-[10px] font-semibold text-black bg-white px-2 py-1">
                   {product.badge}
@@ -173,19 +210,13 @@ const ProductPage = () => {
 
           {/* Product Details */}
           <div className="flex flex-col">
-            <h1 className="text-2xl font-extrabold text-black uppercase">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-black uppercase">
               {product.title}
             </h1>
 
-            <p className="text-2xl font-semibold text-black mb-6">
+            <p className="text-xl font-medium text-gray-800 mt-1 mb-6">
               {product.price}
             </p>
-            {/* 
-            {product.description && (
-              <p className="text-sm md:text-base text-gray-600 mb-8 leading-relaxed">
-                {product.description}
-              </p>
-            )} */}
 
             {/* Size Selection */}
             {product.sizes && product.sizes.length > 0 && (
@@ -202,20 +233,34 @@ const ProductPage = () => {
                   </button>
                 </div>
                 <div className="flex gap-2">
-                  {product.sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className={`px-4 py-2 border text-sm font-medium transition-colors ${
-                        selectedSize === size
-                          ? "border-black bg-black text-white"
-                          : "border-gray-300 text-black hover:border-black"
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
+                  {product.sizes.map((size) => {
+                    const sizeSoldOut = stockOf(size) === 0;
+                    return (
+                      <button
+                        key={size}
+                        onClick={() => !sizeSoldOut && setSelectedSize(size)}
+                        disabled={sizeSoldOut}
+                        className={`px-4 py-2 border rounded-lg text-sm font-medium transition-colors ${
+                          sizeSoldOut
+                            ? "border-gray-200 text-gray-300 line-through cursor-not-allowed"
+                            : selectedSize === size
+                            ? "border-black bg-black text-white"
+                            : "border-gray-300 text-black hover:border-black"
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    );
+                  })}
                 </div>
+                {!comingSoon &&
+                  selectedStock !== undefined &&
+                  selectedStock > 0 &&
+                  selectedStock <= 3 && (
+                    <p className="text-xs text-red-600 mt-2">
+                      Only {selectedStock} left in {selectedSize}
+                    </p>
+                  )}
               </div>
             )}
 
@@ -249,7 +294,7 @@ const ProductPage = () => {
                 Quantity
               </label>
               <div className="flex items-center gap-3">
-                <div className="flex items-center border border-gray-300">
+                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                   <button
                     onClick={decreaseQuantity}
                     className="p-2 hover:bg-gray-100 transition-colors"
@@ -271,31 +316,38 @@ const ProductPage = () => {
               </div>
             </div>
 
-            {product.outOfStock ? (
+            {comingSoon ? (
               <button
                 disabled
-                className="w-3/4 bg-gray-200 border border-gray-300 text-gray-500 py-4 uppercase text-sm font-bold cursor-not-allowed mb-8"
+                className="w-full bg-black text-white py-4 uppercase text-sm font-bold rounded-lg cursor-not-allowed mb-8"
+              >
+                Drops July 16 · 7PM
+              </button>
+            ) : product.outOfStock || soldOut ? (
+              <button
+                disabled
+                className="w-full bg-gray-200 border border-gray-300 text-gray-500 py-4 uppercase text-sm font-bold rounded-lg cursor-not-allowed mb-8"
               >
                 Sold Out
               </button>
             ) : (
-              <>
+              <div className="flex gap-3 w-full mb-8">
                 {/* Add to Cart Button */}
                 <button
                   onClick={handleAddToCart}
-                  className="cursor-pointer w-3/4 bg-white border border-black text-black py-4 uppercase text-sm font-bold hover:bg-gray-50 transition-colors mb-3"
+                  className="cursor-pointer flex-1 bg-white border border-black text-black py-4 uppercase text-sm font-bold rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Add to Cart
                 </button>
 
-                {/* Buy it Now Button */}
+                {/* Buy Now Button */}
                 <button
                   onClick={handleBuyNow}
-                  className="cursor-pointer w-3/4 bg-black text-white py-4 uppercase text-sm font-bold hover:bg-gray-800 transition-colors mb-8"
+                  className="cursor-pointer flex-1 bg-black text-white py-4 uppercase text-sm font-bold rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  Buy it now
+                  Buy Now
                 </button>
-              </>
+              </div>
             )}
 
             {/* Accordion Sections */}
@@ -316,50 +368,27 @@ const ProductPage = () => {
                   />
                 </button>
                 {openAccordion === "description" && (
-                  <div className="pb-4 text-sm text-gray-600 leading-relaxed">
-                    {product.description ||
-                      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship."}
+                  <div className="pb-4 text-sm text-gray-600 leading-relaxed space-y-2">
+                    {product.details ? (
+                      product.details.map((line) => <p key={line}>{line}</p>)
+                    ) : (
+                      <p>
+                        {product.description ||
+                          "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship."}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
 
-              {/* SIZE & FIT */}
-              <div className="border-b border-gray-200">
-                <button
-                  onClick={() => toggleAccordion("sizefit")}
-                  className="w-full flex items-center justify-between py-4 text-left"
-                >
-                  <span className="text-sm font-medium uppercase">
-                    SIZE & FIT
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 transition-transform ${
-                      openAccordion === "sizefit" ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openAccordion === "sizefit" && (
-                  <div className="pb-4 text-sm text-gray-600 space-y-2">
-                    <p>True to size fit</p>
-                    <p>100% Cotton</p>
-                    <button
-                      onClick={() => setShowSizeGuide(true)}
-                      className="text-black underline hover:no-underline"
-                    >
-                      View Size Guide
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* SHIPPING & RETURNS */}
+              {/* DELIVERY INFORMATION */}
               <div className="border-b border-gray-200">
                 <button
                   onClick={() => toggleAccordion("shipping")}
                   className="w-full flex items-center justify-between py-4 text-left"
                 >
                   <span className="text-sm font-medium uppercase">
-                    SHIPPING & RETURNS
+                    DELIVERY INFORMATION
                   </span>
                   <ChevronDown
                     className={`w-5 h-5 transition-transform ${
@@ -369,13 +398,19 @@ const ProductPage = () => {
                 </button>
                 {openAccordion === "shipping" && (
                   <div className="pb-4 text-sm text-gray-600 space-y-2">
-                    <p>
-                    Please confirm by reading the delivery information of each item. Also, ensure you provide a valid email and phone number when placing an order to avoid communication issues.
-                    </p>
-                    <p>All preordered items typically take 2-3 weeks for production. Shipping commences after.</p>
-                    <p>
-                    Progress of pre-ordered items will be shared via kagearchvs™ instagram story @prxjectkage.
-                    </p>
+                    {product.delivery ? (
+                      product.delivery.map((line) => <p key={line}>{line}</p>)
+                    ) : (
+                      <>
+                        <p>
+                        Please confirm by reading the delivery information of each item. Also, ensure you provide a valid email and phone number when placing an order to avoid communication issues.
+                        </p>
+                        <p>All preordered items typically take 2-3 weeks for production. Shipping commences after.</p>
+                        <p>
+                        Progress of pre-ordered items will be shared via kagearchvs™ instagram story @prxjectkage.
+                        </p>
+                      </>
+                    )}
                   </div>
                 )}
               </div>

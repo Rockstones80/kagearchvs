@@ -2,8 +2,8 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import gsap from "gsap";
+import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/contexts/cart-context";
 
 const NAV_LINKS = [
@@ -14,9 +14,10 @@ const NAV_LINKS = [
 ];
 
 interface NavbarProps {
-  /** "light" = white lines, fixed overlay (homepage over dark hero)
-   *  "dark"  = black lines + black logo, static in page flow (inner pages) */
-  variant?: "light" | "dark";
+  /** "light"  = white lines, fixed overlay (homepage over dark hero)
+   *  "dark"   = black lines + black logo, static in page flow (inner pages)
+   *  "banner" = white lines + white logo, static — for overlaying a dark banner */
+  variant?: "light" | "dark" | "banner";
 }
 
 export default function Navbar({ variant = "light" }: NavbarProps) {
@@ -135,30 +136,43 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           <span ref={line3Ref} style={{ display: "block", height: "2.5px", width: "60%",  background: lineColor, transformOrigin: "center" }} />
         </button>
 
-        {/* Center — logo (dark variant only) */}
-        {variant === "dark" && (
-          <div
-            style={{
-              position:  "absolute",
-              left:      "50%",
-              top:       "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <Link href="/">
-              <Image
-                src="/logoweb-02.png"
-                alt="kagearchvs"
-                width={250}
-                height={48}
-                style={{ objectFit: "contain", filter: "brightness(0)", opacity: 0.7, display: "block" }}
-              />
-            </Link>
-          </div>
-        )}
-
-        {/* Right — spacer */}
-        <div style={{ width: "32px", flexShrink: 0 }} />
+        {/* Right — cart icon */}
+        <Link
+          href="/cart"
+          aria-label={`My Cart${cartItemCount > 0 ? ` (${cartItemCount} items)` : ""}`}
+          style={{
+            position:   "relative",
+            display:    "flex",
+            alignItems: "center",
+            flexShrink: 0,
+            color:      lineColor,
+          }}
+        >
+          <ShoppingBag size={24} strokeWidth={1.8} />
+          {cartItemCount > 0 && (
+            <span
+              style={{
+                position:       "absolute",
+                top:            "-6px",
+                right:          "-8px",
+                minWidth:       "17px",
+                height:         "17px",
+                borderRadius:   "9px",
+                background:     variant === "dark" ? "#111" : "#fff",
+                color:          variant === "dark" ? "#fff" : "#111",
+                fontSize:       "0.65rem",
+                fontWeight:     700,
+                display:        "flex",
+                alignItems:     "center",
+                justifyContent: "center",
+                padding:        "0 4px",
+                lineHeight:     1,
+              }}
+            >
+              {cartItemCount}
+            </span>
+          )}
+        </Link>
       </div>
 
       {/* ── Dropdown menu ────────────────────────────────────────────────── */}
@@ -170,7 +184,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           top:                  "72px",
           left:                 "16px",
           zIndex:               50,
-          background:           variant === "dark"
+          background:           variant !== "light"
             ? "rgba(255, 255, 255, 0.95)"
             : "rgba(255, 255, 255, 0.55)",
           backdropFilter:       "blur(12px)",
@@ -178,7 +192,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           borderRadius:         "4px",
           padding:              "24px 40px 24px 28px",
           minWidth:             "200px",
-          boxShadow:            variant === "dark" ? "0 4px 24px rgba(0,0,0,0.08)" : "none",
+          boxShadow:            variant !== "light" ? "0 4px 24px rgba(0,0,0,0.08)" : "none",
         }}
       >
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -201,7 +215,7 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
                     fontWeight:    700,
                     textTransform: "uppercase",
                     letterSpacing: "0.04em",
-                    color:         variant === "dark" ? "#111" : "#444",
+                    color:         variant !== "light" ? "#111" : "#444",
                     display:       "block",
                     transition:    "opacity 0.2s",
                   }}
