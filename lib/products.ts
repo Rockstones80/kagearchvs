@@ -19,9 +19,74 @@ export interface Product {
   colors?: string[];
   sizeGuide?: SizeGuide[];
   outOfStock?: boolean;
+  /** ISO date — product is not purchasable before this moment */
+  releaseDate?: string;
+  /** true = per-size stock lives in Supabase (product_stock table) */
+  stockManaged?: boolean;
+  /** bullet lines for the PRODUCT DETAILS accordion */
+  details?: string[];
+  /** bullet lines for the DELIVERY INFORMATION accordion */
+  delivery?: string[];
 }
 
+/** July 16, 2026 · 7:00 PM WAT */
+export const SALE_START = "2026-07-16T19:00:00+01:00";
+
+export const isComingSoon = (product: Product): boolean =>
+  !!product.releaseDate && Date.now() < new Date(product.releaseDate).getTime();
+
 export const products: Product[] = [
+  {
+    id: "10",
+    slug: "kagearchvs-dreaming-tank-top",
+    title: "KAGEARCHVS DREAMING TANK TOP",
+    price: "₦24,999.99",
+    image: "/shop/dreaming-tank/tank.png",
+    description:
+      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
+    images: ["/shop/dreaming-tank/tank.png"],
+    sizes: ["S", "M", "L"],
+    releaseDate: SALE_START,
+    stockManaged: true,
+    details: [
+      "Premium quality Direct-To-Garment (DTG) print.",
+      "Women's Sizing",
+    ],
+    delivery: [
+      "Ready to ship.",
+      "For Domestic Orders, 5-7 Business Days after order processing.",
+    ],
+  },
+  {
+    id: "11",
+    slug: "kagearchvs-wordmark-tee",
+    title: "KAGEARCHVS WORDMARK TEE",
+    price: "₦29,999.99",
+    image: "/shop/wordmark/wordmark.png",
+    description:
+      "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
+    images: ["/shop/wordmark/wordmark.png"],
+    sizes: ["S", "M", "L", "XL"],
+    sizeGuide: [
+      { size: "S", length: "68", chest: "53", shoulderWidth: "42" },
+      { size: "M", length: "71", chest: "56", shoulderWidth: "45" },
+      { size: "L", length: "74", chest: "59", shoulderWidth: "48" },
+      { size: "XL", length: "77", chest: "62", shoulderWidth: "51" },
+    ],
+    releaseDate: SALE_START,
+    stockManaged: true,
+    details: [
+      "Premium quality Direct-To-Garment (DTG) print.",
+      "Men's Sizing",
+    ],
+    delivery: [
+      "Ready to ship.",
+      "For Domestic Orders, 5-7 Business Days after order processing.",
+    ],
+  },
+];
+
+/* Previous collection — removed from the shop (restore from git history if needed)
   {
     id: "1",
     slug: "kagearchvs-broken-angels-tee",
@@ -234,6 +299,7 @@ export const products: Product[] = [
     outOfStock: true,
   },
 ];
+*/
 
 export const getProductBySlug = (slug: string): Product | undefined => {
   return products.find((product) => product.slug === slug);
