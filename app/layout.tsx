@@ -6,23 +6,33 @@ import { Toaster } from "react-hot-toast";
 import CustomCursor from "@/components/ui/custom-cursor";
 import { Analytics } from "@vercel/analytics/react";
 
-const hkGrotesk = localFont({
+const metropolis = localFont({
   variable: "--font-grotesk",
   display: "swap",
   src: [
     {
-      path: "./fonts/Grotesk/HKGrotesk-Light.woff2",
+      path: "./fonts/Metropolis/metropolis-latin-300-normal.woff2",
       weight: "300",
       style: "normal",
     },
     {
-      path: "./fonts/Grotesk/HKGrotesk-Regular.woff2",
+      path: "./fonts/Metropolis/metropolis-latin-400-normal.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "./fonts/Grotesk/HKGrotesk-Medium.woff2",
+      path: "./fonts/Metropolis/metropolis-latin-500-normal.woff2",
       weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Metropolis/metropolis-latin-600-normal.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Metropolis/metropolis-latin-700-normal.woff2",
+      weight: "700",
       style: "normal",
     },
   ],
@@ -101,7 +111,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${hkGrotesk.variable} ${fraunces.variable} antialiased`}>
+      <body className={`${metropolis.variable} ${fraunces.variable} antialiased`}>
         <CartProvider>
           <CustomCursor />
           {children}
