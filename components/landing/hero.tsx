@@ -4,22 +4,9 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
-import Slideshow from "@/components/ui/slideshow";
 
-const heroImages = [
-  { src: "/hero-a1.jpg", alt: "Hero 1" },
-  { src: "/hero-a2.jpg", alt: "Hero 2" },
-  { src: "/hero-a3.jpg", alt: "Hero 3" },
-  { src: "/hero-a4.jpg", alt: "Hero 4" },
-  { src: "/hero-a5.jpg", alt: "Hero 5" },
-];
-
-const heroImagesMobile = [
-  { src: "/4.jpg",       alt: "Hero 3" },
-  { src: "/mobile-1.jpg",      alt: "Hero 4" },
-  { src: "/D10.jpg",      alt: "Hero 4" },
-  { src: "/mobile-2.jpg", alt: "Hero 2" },
-];
+const HERO_IMAGE_DESKTOP = "/hero/hero-1.jpg";
+const HERO_IMAGE_MOBILE  = "/hero/mobile-2.jpg";
 
 const Hero = () => {
   const sectionRef   = useRef<HTMLElement>(null);
@@ -28,15 +15,14 @@ const Hero = () => {
   const imageWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.set(sectionRef.current,   { opacity: 0 });
+    if (sessionStorage.getItem("intro-seen")) return;
+
     gsap.set(imageWrapRef.current, { scale: 1.08 });
     gsap.set(overlayRef.current,   { opacity: 0 });
     gsap.set(logoRef.current,      { opacity: 0, y: 16 });
 
     const runEntrance = () => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-
-      tl.to(sectionRef.current,   { opacity: 1, duration: 0.01 });
       tl.to(imageWrapRef.current, { scale: 1, duration: 1.8 }, 0);
       tl.to(overlayRef.current,   { opacity: 1, duration: 1.2 }, 0);
       tl.to(logoRef.current,      { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.4);
@@ -52,10 +38,24 @@ const Hero = () => {
       {/* Images */}
       <div ref={imageWrapRef} className="absolute inset-0 w-full h-full">
         <div className="md:hidden block absolute inset-0 w-full h-full">
-          <Slideshow images={heroImagesMobile} interval={5000} transitionDuration={1000} />
+          <Image
+            src={HERO_IMAGE_MOBILE}
+            alt="KAGEARCHVS hero"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-left sm:object-top"
+          />
         </div>
         <div className="hidden md:block absolute inset-0 w-full h-full">
-          <Slideshow images={heroImages} interval={5000} transitionDuration={1000} />
+          <Image
+            src={HERO_IMAGE_DESKTOP}
+            alt="KAGEARCHVS hero"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-left sm:object-top"
+          />
         </div>
       </div>
 
