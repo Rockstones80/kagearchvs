@@ -253,14 +253,6 @@ const ProductPage = () => {
                     );
                   })}
                 </div>
-                {!comingSoon &&
-                  selectedStock !== undefined &&
-                  selectedStock > 0 &&
-                  selectedStock <= 3 && (
-                    <p className="text-xs text-red-600 mt-2">
-                      Only {selectedStock} left in {selectedSize}
-                    </p>
-                  )}
               </div>
             )}
 
