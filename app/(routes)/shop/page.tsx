@@ -136,7 +136,7 @@ export default function ShopPage() {
                   width:       "100%",
                   aspectRatio: "3/4",
                   overflow:    "hidden",
-                  background:  "#f0ede8",
+                  background:  "#fff",
                 }}
               >
                 {/* Front image */}
@@ -182,10 +182,10 @@ export default function ShopPage() {
               >
                 <p
                   style={{
-                    fontSize:      "0.82rem",
+                    fontSize:      "1rem",
                     fontWeight:    600,
                     color:         "#111",
-                    margin:        "0 0 5px",
+                    margin:        "0 0 6px",
                     letterSpacing: "0.01em",
                     lineHeight:    1.4,
                   }}
@@ -194,7 +194,7 @@ export default function ShopPage() {
                 </p>
                 <p
                   style={{
-                    fontSize:   "0.82rem",
+                    fontSize:   "0.95rem",
                     fontWeight: 500,
                     color:      "#555",
                     margin:     0,
