@@ -209,7 +209,7 @@ const ProductPage = () => {
                 src={product.image}
                 alt={product.title}
                 fill
-                className="object-cover"
+                className="object-cover scale-115"
                 priority
               />
               {/* {product.badge && (
