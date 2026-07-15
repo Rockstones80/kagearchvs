@@ -2,8 +2,8 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
-import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/contexts/cart-context";
 
 const NAV_LINKS = [
@@ -144,43 +144,35 @@ export default function Navbar({ variant = "light" }: NavbarProps) {
           <span ref={line3Ref} style={{ display: "block", height: "2.5px", width: "60%",  background: lineColor, transformOrigin: "center" }} />
         </button>
 
-        {/* Right — cart icon */}
-        <Link
-          href="/cart"
-          aria-label={`My Cart${cartItemCount > 0 ? ` (${cartItemCount} items)` : ""}`}
-          style={{
-            position:   "relative",
-            display:    "flex",
-            alignItems: "center",
-            flexShrink: 0,
-            color:      lineColor,
-          }}
-        >
-          <ShoppingBag size={24} strokeWidth={1.8} />
-          {cartItemCount > 0 && (
-            <span
-              style={{
-                position:       "absolute",
-                top:            "-6px",
-                right:          "-8px",
-                minWidth:       "17px",
-                height:         "17px",
-                borderRadius:   "9px",
-                background:     variant === "dark" ? "#111" : "#fff",
-                color:          variant === "dark" ? "#fff" : "#111",
-                fontSize:       "0.65rem",
-                fontWeight:     700,
-                display:        "flex",
-                alignItems:     "center",
-                justifyContent: "center",
-                padding:        "0 4px",
-                lineHeight:     1,
-              }}
-            >
-              {cartItemCount}
-            </span>
-          )}
-        </Link>
+        {/* Center — logo (inner pages; homepage hero has its own large logo) */}
+        {variant !== "light" && (
+          <div
+            style={{
+              position:  "absolute",
+              left:      "50%",
+              top:       "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Link href="/">
+              <Image
+                src="/logoweb-02.png"
+                alt="kagearchvs"
+                width={170}
+                height={33}
+                style={{
+                  objectFit: "contain",
+                  filter:    variant === "dark" ? "brightness(0)" : "brightness(0) invert(1)",
+                  opacity:   variant === "dark" ? 0.7 : 0.9,
+                  display:   "block",
+                }}
+              />
+            </Link>
+          </div>
+        )}
+
+        {/* Right — spacer (keeps the hamburger balanced) */}
+        <div style={{ width: "32px", flexShrink: 0 }} />
       </div>
 
       {/* ── Dropdown menu ────────────────────────────────────────────────── */}
