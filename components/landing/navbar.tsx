@@ -22,7 +22,15 @@ interface NavbarProps {
 
 export default function Navbar({ variant = "light" }: NavbarProps) {
   const { getTotalItems } = useCart();
-  const cartItemCount = getTotalItems();
+
+  // Cart count comes from localStorage (client-only) — render it only after
+  // mount so the server and first client render match (avoids hydration errors)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration gate
+    setMounted(true);
+  }, []);
+  const cartItemCount = mounted ? getTotalItems() : 0;
 
   const [open, setOpen] = useState(false);
 
