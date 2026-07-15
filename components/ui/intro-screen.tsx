@@ -6,6 +6,10 @@ import gsap from "gsap";
 const INTRO_VIDEO_DESKTOP = "/videos/intro.mp4";
 const INTRO_VIDEO_MOBILE  = "/videos/intro-mobile.mp4";
 
+/** Fade the intro out after this many seconds of playback,
+    even if the video hasn't finished */
+const INTRO_MAX_SECONDS = 5;
+
 type IntroState = {
   phase: "idle" | "playing" | "done";
   src:   string | null;
@@ -50,8 +54,18 @@ export default function IntroScreen() {
       });
     };
 
+    // Cap the intro: fade out INTRO_MAX_SECONDS after playback starts,
+    // even if the video is longer.
+    let capTimer: number | undefined;
+    const onPlaying = () => {
+      if (capTimer === undefined) {
+        capTimer = window.setTimeout(finish, INTRO_MAX_SECONDS * 1000);
+      }
+    };
+
     video.addEventListener("ended", finish);
     video.addEventListener("error", finish);
+    video.addEventListener("playing", onPlaying);
 
     // Autoplay blocked → skip the intro rather than trap the visitor.
     video.play().catch(finish);
@@ -64,7 +78,9 @@ export default function IntroScreen() {
     return () => {
       video.removeEventListener("ended", finish);
       video.removeEventListener("error", finish);
+      video.removeEventListener("playing", onPlaying);
       window.clearTimeout(guard);
+      window.clearTimeout(capTimer);
       gsap.killTweensOf(preloader);
     };
   }, [phase, src]);

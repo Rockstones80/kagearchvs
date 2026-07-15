@@ -64,7 +64,17 @@
       "Bash(git config core.ignorecase false)",
       "Bash(git add -A public/shop/ public/)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(git rm *)",
+      "Bash(node compress-hero.js mobile-1.jpg mobile-2.jpg)",
+      "Bash(npx eslint *)",
+      "Bash(node compress-products.js)",
+      "Bash(npm view *)",
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: video intro preloader + new static hero images *)"
     ]
   }
 }
