@@ -29,10 +29,8 @@ export interface Product {
   delivery?: string[];
 }
 
-/** July 16, 2026 · 7:00 PM WAT
- *  Currently set to the past — the gate is OPEN and products are purchasable.
- *  Set back to "2026-07-16T19:00:00+01:00" to re-arm the countdown gate. */
-export const SALE_START = "2026-07-01T00:00:00+01:00";
+/** July 16, 2026 · 7:00 PM WAT */
+export const SALE_START = "2026-07-16T19:00:00+01:00";
 
 export const isComingSoon = (product: Product): boolean =>
   !!product.releaseDate && Date.now() < new Date(product.releaseDate).getTime();
