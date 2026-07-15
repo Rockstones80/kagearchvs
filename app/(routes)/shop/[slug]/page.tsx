@@ -7,9 +7,21 @@ import Link from "next/link";
 import Navbar from "@/components/landing/navbar";
 // import Footer from "@/components/landing/footer";
 import { useCart } from "@/contexts/cart-context";
-import { getProductBySlug, isComingSoon } from "@/lib/products";
+import { getProductBySlug, isComingSoon, type SizeGuide } from "@/lib/products";
 import { Minus, Plus, X, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
+
+// Every measurement column a size guide can have (in display order) — each
+// product's table only shows the columns its guide actually fills in
+const SIZE_GUIDE_COLUMNS: [keyof SizeGuide, string][] = [
+  ["length", "Length"],
+  ["chest", "Chest"],
+  ["bust", "Bust"],
+  ["shoulderWidth", "Shoulder Width"],
+  ["shoulder", "Shoulder"],
+  ["frontShoulderWidth", "Front Shoulder Width"],
+  ["frontCollarWidth", "Front Collar Width"],
+];
 
 const ProductPage = () => {
   const params = useParams();
@@ -57,6 +69,12 @@ const ProductPage = () => {
     !!sizeStock &&
     (product.sizes ?? []).every((s) => (sizeStock[s] ?? 0) === 0);
   const selectedStock = stockOf(selectedSize);
+
+  const sizeGuideColumns = product?.sizeGuide?.length
+    ? SIZE_GUIDE_COLUMNS.filter(
+        ([key]) => product.sizeGuide![0][key] !== undefined
+      )
+    : [];
 
   const toggleAccordion = (section: string) => {
     setOpenAccordion(openAccordion === section ? null : section);
@@ -186,7 +204,7 @@ const ProductPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="relative w-full bg-gray-100 overflow-hidden" style={{ aspectRatio: "4/5" }}>
+            <div className="relative w-full bg-white overflow-hidden" style={{ aspectRatio: "4/5" }}>
               <Image
                 src={product.image}
                 alt={product.title}
@@ -458,17 +476,14 @@ const ProductPage = () => {
                         <th className="text-left py-3 px-4 font-bold uppercase">
                           Size
                         </th>
-                        <th className="text-center py-3 px-4 font-bold uppercase">
-                          Length
-                        </th>
-                        <th className="text-center py-3 px-4 font-bold uppercase">
-                          {product.sizeGuide[0].chest ? "Chest" : "Bust Size"}
-                        </th>
-                        <th className="text-center py-3 px-4 font-bold uppercase">
-                          {product.sizeGuide[0].shoulderWidth
-                            ? "Shoulder Width"
-                            : "Shoulder"}
-                        </th>
+                        {sizeGuideColumns.map(([, label]) => (
+                          <th
+                            key={label}
+                            className="text-center py-3 px-4 font-bold uppercase"
+                          >
+                            {label}
+                          </th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
@@ -480,15 +495,11 @@ const ProductPage = () => {
                           <td className="py-4 px-4 font-semibold">
                             {item.size}
                           </td>
-                          <td className="py-4 px-4 text-center">
-                            {item.length}
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            {item.chest || item.chest}
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            {item.shoulderWidth || item.shoulder}
-                          </td>
+                          {sizeGuideColumns.map(([key, label]) => (
+                            <td key={label} className="py-4 px-4 text-center">
+                              {item[key]}
+                            </td>
+                          ))}
                         </tr>
                       ))}
                     </tbody>

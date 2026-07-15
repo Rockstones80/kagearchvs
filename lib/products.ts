@@ -2,8 +2,11 @@ export interface SizeGuide {
   size: string;
   length: string;
   chest?: string;
+  bust?: string;
   shoulder?: string;
   shoulderWidth?: string;
+  frontShoulderWidth?: string;
+  frontCollarWidth?: string;
 }
 
 export interface Product {
@@ -46,6 +49,12 @@ export const products: Product[] = [
       "Premium quality Direct-To-Garment (DTG) print made with attention to detail and craftsmanship.",
     images: ["/shop/dreaming-tank/tank.png"],
     sizes: ["S", "M", "L"],
+    sizeGuide: [
+      { size: "S",  length: "50.5", bust: "70", frontShoulderWidth: "26.3", frontCollarWidth: "18.2" },
+      { size: "M",  length: "52.5", bust: "76", frontShoulderWidth: "27.8", frontCollarWidth: "19.2" },
+      { size: "L",  length: "54.5", bust: "82", frontShoulderWidth: "29.3", frontCollarWidth: "20.2" },
+      { size: "XL", length: "56.5", bust: "88", frontShoulderWidth: "30.8", frontCollarWidth: "21.2" },
+    ],
     releaseDate: SALE_START,
     stockManaged: true,
     details: [
@@ -68,10 +77,10 @@ export const products: Product[] = [
     images: ["/shop/wordmark/wordmark.png"],
     sizes: ["S", "M", "L", "XL"],
     sizeGuide: [
-      { size: "S", length: "68", chest: "53", shoulderWidth: "42" },
-      { size: "M", length: "71", chest: "56", shoulderWidth: "45" },
-      { size: "L", length: "74", chest: "59", shoulderWidth: "48" },
-      { size: "XL", length: "77", chest: "62", shoulderWidth: "51" },
+      { size: "S",  length: "68", chest: "50.5", shoulderWidth: "49" },
+      { size: "M",  length: "70", chest: "52.5", shoulderWidth: "51" },
+      { size: "L",  length: "72", chest: "54.5", shoulderWidth: "53" },
+      { size: "XL", length: "74", chest: "56.5", shoulderWidth: "55" },
     ],
     releaseDate: SALE_START,
     stockManaged: true,
