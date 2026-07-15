@@ -103,7 +103,7 @@ export default function CustomCursor() {
         opacity: 0,
       }}
     >
-      <circle cx="10" cy="10" r="5" fill="#e0530e" opacity="0.7" />
+      <circle cx="10" cy="10" r="5" fill="#4e0000" opacity="0.7" />
     </svg>
   );
 }
