@@ -23,8 +23,10 @@ export interface OrderItem {
 export interface ShippingAddress {
   address: string;
   city: string;
+  state?: string;
   postal_code: string;
   country: string;
+  notes?: string;
 }
 
 export interface Order {

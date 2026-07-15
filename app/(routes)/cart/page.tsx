@@ -7,8 +7,6 @@ import Navbar from "@/components/landing/navbar";
 import { useCart } from "@/contexts/cart-context";
 import { Minus, Plus, ShoppingBag } from "lucide-react";
 
-const BACKGROUND_IMAGE = "/shop/banner.jpg";
-
 /** "₦22,999.99" -> 22999.99 */
 const parsePrice = (price: string) =>
   parseFloat(price.replace(/[₦,]/g, "").trim()) || 0;
@@ -20,31 +18,13 @@ const formatPrice = (price: number) =>
     maximumFractionDigits: 2,
   });
 
-/** Full-viewport banner background with floating navbar */
 const CartShell = ({ children }: { children: React.ReactNode }) => (
-  <main className="relative w-full min-h-screen">
-    {/* Background */}
-    <div className="fixed inset-0 z-0">
-      <Image
-        src={BACKGROUND_IMAGE}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
-    </div>
+  <main className="w-full min-h-screen bg-white">
+    <Navbar variant="dark" />
 
-    {/* Navbar floating over the background */}
-    <div className="relative z-20">
-      <Navbar variant="banner" />
-    </div>
-
-    {/* Centered panel */}
-    <div className="relative z-10 flex justify-center px-4 pt-6 pb-16 md:pt-10">
-      <div className="w-full max-w-3xl bg-white/75 backdrop-blur-md shadow-2xl p-6 md:p-12">
-        {children}
-      </div>
+    {/* Centered content */}
+    <div className="flex justify-center px-4 pt-6 pb-16 md:pt-10">
+      <div className="w-full max-w-3xl p-2 md:p-6">{children}</div>
     </div>
   </main>
 );

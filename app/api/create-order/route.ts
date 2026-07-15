@@ -79,8 +79,10 @@ export async function POST(request: NextRequest) {
         shipping_address: {
           address: orderData.shippingAddress?.address || "",
           city: orderData.shippingAddress?.city || "",
+          state: orderData.shippingAddress?.state || "",
           postal_code: orderData.shippingAddress?.postalCode || "",
           country: orderData.shippingAddress?.country || "",
+          notes: orderData.shippingAddress?.notes || "",
         },
         items: orderData.items,
         total_amount: orderData.totalAmount,

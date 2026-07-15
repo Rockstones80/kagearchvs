@@ -3,6 +3,7 @@
 import React from "react";
 import { usePaystackPayment } from "react-paystack";
 import { Lock } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface PaystackReference {
   reference: string;
@@ -27,6 +28,7 @@ interface PaystackButtonProps {
   onClose: () => void;
   isProcessing: boolean;
   disabled: boolean;
+  label?: string;
 }
 
 export const PaystackButton: React.FC<PaystackButtonProps> = ({
@@ -35,10 +37,17 @@ export const PaystackButton: React.FC<PaystackButtonProps> = ({
   onClose,
   isProcessing,
   disabled,
+  label = "Proceed to Payment",
 }) => {
   const initializePayment = usePaystackPayment(config as never);
 
   const handleClick = () => {
+    if (!config.publicKey) {
+      toast.error(
+        "Payment is not configured — missing Paystack public key. Set NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY in the environment."
+      );
+      return;
+    }
     initializePayment({ onSuccess, onClose });
   };
 
@@ -47,7 +56,7 @@ export const PaystackButton: React.FC<PaystackButtonProps> = ({
       type="button"
       onClick={handleClick}
       disabled={isProcessing || disabled}
-      className="w-full bg-black text-white py-4 uppercase text-sm font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      className="w-full bg-black text-white py-4 uppercase text-sm font-bold rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
       {isProcessing ? (
         <>
@@ -57,7 +66,7 @@ export const PaystackButton: React.FC<PaystackButtonProps> = ({
       ) : (
         <>
           <Lock className="w-4 h-4" />
-          Proceed to Payment
+          {label}
         </>
       )}
     </button>
