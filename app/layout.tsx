@@ -77,9 +77,9 @@ export const metadata: Metadata = {
       "KAGEARCHVS is more than clothing : it's how I translate emotion into design. Explore raw, expressive fashion that tells a story.",
     images: [
       {
-        url: "/hero-9.2.jpg",
-        width: 1200,
-        height: 630,
+        url: "/hero/hero-1.jpg",
+        width: 2560,
+        height: 1707,
         alt: "KAGEARCHVS",
       },
     ],
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     title: "KAGEARCHVS",
     description:
       "KAGEARCHVS is more than clothing — it's how I translate emotion into design.",
-    images: ["/hero-9.2.jpg"],
+    images: ["/hero/hero-1.jpg"],
   },
   robots: {
     index: true,
