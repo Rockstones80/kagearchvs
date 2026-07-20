@@ -89,7 +89,7 @@ insert into product_stock (product_slug, size, stock) values
   ('kagearchvs-dreaming-tank-top', 'M', 3),
   ('kagearchvs-dreaming-tank-top', 'L', 1),
   ('kagearchvs-wordmark-tee',      'S', 3),
-  ('kagearchvs-wordmark-tee',      'M', 8),
+  ('kagearchvs-wordmark-tee',      'M', 7),
   ('kagearchvs-wordmark-tee',      'L', 5),
   ('kagearchvs-wordmark-tee',      'XL', 1)
 on conflict (product_slug, size) do update set stock = excluded.stock;
