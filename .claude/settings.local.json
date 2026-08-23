@@ -74,7 +74,20 @@
       "Bash(npm view *)",
       "Bash(npm install *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'feat: video intro preloader + new static hero images *)"
+      "Bash(git commit -m 'feat: video intro preloader + new static hero images *)",
+      "Bash(git push *)",
+      "Bash(sed -i '/import Footer from \"@\\\\/components\\\\/landing\\\\/footer\";/d; /^\\\\s*<Footer \\\\/>\\\\s*$/d' \"app/\\(routes\\)/checkout/page.tsx\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(git commit -m 'feat: open the sale — disable the July 16 date gate *)",
+      "Bash(git commit -m 'feat: re-arm the July 16 sale gate *)",
+      "Bash(git commit -m 'style: remove low-stock '\\\\''Only X left'\\\\'' hint on product page *)",
+      "Bash(git commit -m 'style: zoom product image 115% to crop mockup whitespace *)",
+      "Bash(curl -s \"https://vjsmdmzrucgodhbgacuv.supabase.co/rest/v1/product_stock?select=product_slug,size,stock&order=product_slug,size\" -H \"apikey: sb_publishable_bFSyPqQ8H1IDDWVdASuXwQ_t_fB7BkJ\")",
+      "Bash(git commit -m 'feat: replace video preloader with pure-CSS RED SUMMER intro *)",
+      "Bash(git commit -m 'chore: link-preview image now uses current hero \\(hero-1.jpg\\) *)",
+      "Bash(git commit -m 'chore: stock seed — wordmark M is 7 *)",
+      "Bash(git revert *)",
+      "Bash(git commit -m 'revert: back to the video intro preloader *)"
     ]
   }
 }
