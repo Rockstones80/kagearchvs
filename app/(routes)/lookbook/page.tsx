@@ -5,60 +5,85 @@ import Navbar from "@/components/landing/navbar";
 // import Footer from "@/components/landing/footer";
 import { useEffect, useState, useCallback } from "react";
 
-const lookbookImages = [
-  { src: "/lookbook/sober-01.jpg", alt: "Sober 01 lookbook shot" },
-  {
-    src: "/lookbook/streetsoukxhomecomingfinal-01.jpg",
-    alt: "Street Souk x Homecoming lookbook shot",
-  },
-  {
-    src: "/lookbook/boutUfullposter-ig-portrait-1080-1350.jpeg",
-    alt: "Bout U Full poster",
-  },
-  {
-    src: "/lookbook/surfernew-ig-portrait-1080-1350.jpeg",
-    alt: "Surfer new portrait",
-  },
+interface LookbookImage {
+  src: string;
+  alt: string;
+  /** Intrinsic pixel size — every tile is drawn at its own aspect ratio, so
+   *  these drive the grid height as well as the lightbox, and prevent CLS. */
+  width: number;
+  height: number;
+}
 
-  { src: "/lookbook/solitudeS.jpg", alt: "Solitude lookbook" },
-  { src: "/lookbook/dragonsigilig-02.jpg", alt: "Dragon sigil 02" },
-  { src: "/lookbook/dragonsigilig-03.jpg", alt: "Dragon sigil 03" },
-  { src: "/lookbook/boutUfullposter.jpg", alt: "Bout U Full poster" },
-  { src: "/lookbook/backDesign.jpg", alt: "Back design" },
-  { src: "/lookbook/facesdesign.jpg", alt: "Faces design" },
-  { src: "/lookbook/psychodesign.jpg", alt: "Psycho design" },
-  { src: "/lookbook/designB.jpg", alt: "Design B" },
-  { src: "/lookbook/jj.jpg", alt: "JJ lookbook" },
-  { src: "/lookbook/ll.jpg", alt: "LL lookbook" },
-  { src: "/lookbook/kagethread.jpg", alt: "Kage thread" },
-  { src: "/lookbook/designma.jpg", alt: "Design MA" },
-  { src: "/lookbook/WorldDomDesign.jpg", alt: "World domination design" },
-  { src: "/lookbook/holy.jpg", alt: "Holy design" },
-  { src: "/lookbook/frontDesign.jpg", alt: "Front design" },
-  { src: "/lookbook/back.jpg", alt: "Back lookbook" },
-  { src: "/lookbook/surfer2.jpg", alt: "Surfer 2" },
-  { src: "/lookbook/surfernew.jpg", alt: "Surfer new" },
-  { src: "/lookbook/kdalien-02.jpg", alt: "Alien design" },
-  { src: "/lookbook/handsandsTime.jpg", alt: "Hands and time" },
-  { src: "/lookbook/time+.jpg", alt: "Time plus" },
-  { src: "/lookbook/designart.jpg", alt: "Design art" },
-  { src: "/lookbook/vigilante1.jpg", alt: "Vigilante lookbook 1" },
-  { src: "/lookbook/vigilante2.jpg", alt: "Vigilante lookbook 2" },
-  { src: "/lookbook/normal.jpg", alt: "Normal design" },
-  { src: "/lookbook/rusted.jpg", alt: "Rusted design" },
-  { src: "/lookbook/ART.jpg", alt: "Art lookbook" },
-  { src: "/lookbook/loneliness1.jpg", alt: "Loneliness design" },
-  { src: "/lookbook/macho-01.jpg", alt: "Macho design" },
-  { src: "/lookbook/design.jpg", alt: "Design" },
-  { src: "/lookbook/HBAT11.jpg", alt: "HBAT 11" },
-  { src: "/lookbook/HBAT1.jpg", alt: "HBAT 1" },
-  { src: "/lookbook/Artboard 1.jpg", alt: "Artboard 1" },
-  { src: "/lookbook/ntg1-01.jpg", alt: "NTG 1" },
-  { src: "/lookbook/ntg2-02.jpg", alt: "NTG 2" },
-  { src: "/lookbook/asapnew.jpg", alt: "ASAP new" },
-  { src: "/lookbook/b_w.jpg", alt: "Black and white design" },
-  { src: "/lookbook/l.jpg", alt: "Lookbook L" },
-  { src: "/lookbook/lkk.jpg", alt: "Lookbook LKK" },
+const lookbookImages: LookbookImage[] = [
+  /* ── 2026 identity work ─────────────────────────────────────────────── */
+  { src: "/lookbook/poster.jpg", alt: "Rooted in Design & Identity — Issue 01 cover", width: 1080, height: 1350 },
+  { src: "/lookbook/Untitled-5-07.jpg", alt: "Certified Kage and Red Summer marks", width: 8000, height: 4800 },
+  { src: "/lookbook/ka.jpg", alt: "Kagearchvs wordmark", width: 1350, height: 810 },
+  { src: "/lookbook/red.jpg", alt: "Kage monogram on red", width: 1080, height: 1350 },
+  { src: "/lookbook/emblem.jpg", alt: "Crossed-flag emblem in oxblood", width: 1080, height: 1350 },
+  { src: "/lookbook/hm.jpg", alt: "Crossed-flag emblem in gold", width: 1350, height: 1080 },
+  { src: "/lookbook/bl.jpg", alt: "Flag emblem and wordmark lockups", width: 1350, height: 810 },
+  { src: "/lookbook/r_w.jpg", alt: "Kage monogram flag", width: 1350, height: 810 },
+  { src: "/lookbook/flag1.jpg", alt: "Winged figure over the Kage flag", width: 1350, height: 810 },
+
+  /* ── Prints ─────────────────────────────────────────────────────────── */
+  { src: "/lookbook/blue.jpg", alt: "Gold tiger on indigo", width: 1080, height: 1350 },
+  { src: "/lookbook/samurai.jpg", alt: "Samurai riders wordmark print", width: 1080, height: 1350 },
+  { src: "/lookbook/playlist.jpg", alt: "Red Summer cover art", width: 1080, height: 1080 },
+  { src: "/lookbook/Untitled-1.jpg", alt: "Kage in Tokyo night-drive print", width: 1080, height: 1350 },
+  { src: "/lookbook/ss.jpg", alt: "Future Havvn presents — Lagos, Nigeria", width: 1080, height: 1350 },
+  { src: "/lookbook/sleeve.jpg", alt: "Green star runner sleeve art", width: 1080, height: 1350 },
+
+  /* ── Pop-up ─────────────────────────────────────────────────────────── */
+  { src: "/lookbook/popup.jpg", alt: "Uni Pop-Up flyers, Covenant University", width: 1350, height: 810 },
+  { src: "/lookbook/tent.jpg", alt: "Kagearchvs pop-up tent, angled view", width: 4000, height: 3000 },
+  { src: "/lookbook/tent1.jpg", alt: "Kagearchvs pop-up tent, canopy detail", width: 4000, height: 3000 },
+  { src: "/lookbook/tent2.jpg", alt: "Kagearchvs pop-up tent, front view", width: 4000, height: 3000 },
+
+  /* ── Archive ────────────────────────────────────────────────────────── */
+  { src: "/lookbook/sober-01.jpg", alt: "Sober 01 lookbook shot", width: 4500, height: 5625 },
+  { src: "/lookbook/streetsoukxhomecomingfinal-01.jpg", alt: "Street Souk x Homecoming lookbook shot", width: 4501, height: 5626 },
+  { src: "/lookbook/boutUfullposter-ig-portrait-1080-1350.jpeg", alt: "Bout U Full poster", width: 1080, height: 1350 },
+  { src: "/lookbook/surfernew-ig-portrait-1080-1350.jpeg", alt: "Surfer new portrait", width: 1080, height: 1350 },
+  { src: "/lookbook/solitudeS.jpg", alt: "Solitude lookbook", width: 4800, height: 6000 },
+  { src: "/lookbook/dragonsigilig-02.jpg", alt: "Dragon sigil 02", width: 4501, height: 5626 },
+  { src: "/lookbook/dragonsigilig-03.jpg", alt: "Dragon sigil 03", width: 4501, height: 5626 },
+  { src: "/lookbook/boutUfullposter.jpg", alt: "Bout U Full poster", width: 4800, height: 6000 },
+  { src: "/lookbook/backDesign.jpg", alt: "Back design", width: 1080, height: 1350 },
+  { src: "/lookbook/facesdesign.jpg", alt: "Faces design", width: 1080, height: 1350 },
+  { src: "/lookbook/psychodesign.jpg", alt: "Psycho design", width: 1080, height: 1350 },
+  { src: "/lookbook/designB.jpg", alt: "Design B", width: 1080, height: 1350 },
+  { src: "/lookbook/jj.jpg", alt: "JJ lookbook", width: 2700, height: 3375 },
+  { src: "/lookbook/ll.jpg", alt: "LL lookbook", width: 1080, height: 1350 },
+  { src: "/lookbook/kagethread.jpg", alt: "Kage thread", width: 1080, height: 1350 },
+  { src: "/lookbook/designma.jpg", alt: "Design MA", width: 1080, height: 1350 },
+  { src: "/lookbook/WorldDomDesign.jpg", alt: "World domination design", width: 1080, height: 1350 },
+  { src: "/lookbook/holy.jpg", alt: "Holy design", width: 1080, height: 1350 },
+  { src: "/lookbook/frontDesign.jpg", alt: "Front design", width: 1080, height: 1350 },
+  { src: "/lookbook/back.jpg", alt: "Back lookbook", width: 1080, height: 1350 },
+  { src: "/lookbook/surfer2.jpg", alt: "Surfer 2", width: 4800, height: 6000 },
+  { src: "/lookbook/surfernew.jpg", alt: "Surfer new", width: 4800, height: 6000 },
+  { src: "/lookbook/kdalien-02.jpg", alt: "Alien design", width: 4501, height: 5625 },
+  { src: "/lookbook/handsandsTime.jpg", alt: "Hands and time", width: 4800, height: 6000 },
+  { src: "/lookbook/time+.jpg", alt: "Time plus", width: 4800, height: 6000 },
+  { src: "/lookbook/designart.jpg", alt: "Design art", width: 1080, height: 1350 },
+  { src: "/lookbook/vigilante1.jpg", alt: "Vigilante lookbook 1", width: 4800, height: 6000 },
+  { src: "/lookbook/vigilante2.jpg", alt: "Vigilante lookbook 2", width: 4800, height: 6000 },
+  { src: "/lookbook/normal.jpg", alt: "Normal design", width: 1080, height: 1350 },
+  { src: "/lookbook/rusted.jpg", alt: "Rusted design", width: 1080, height: 1350 },
+  { src: "/lookbook/ART.jpg", alt: "Art lookbook", width: 1080, height: 1350 },
+  { src: "/lookbook/loneliness1.jpg", alt: "Loneliness design", width: 1080, height: 1350 },
+  { src: "/lookbook/macho-01.jpg", alt: "Macho design", width: 4500, height: 5625 },
+  { src: "/lookbook/design.jpg", alt: "Design", width: 1080, height: 1350 },
+  { src: "/lookbook/HBAT11.jpg", alt: "HBAT 11", width: 1080, height: 1350 },
+  { src: "/lookbook/HBAT1.jpg", alt: "HBAT 1", width: 1080, height: 1350 },
+  { src: "/lookbook/Artboard 1.jpg", alt: "Artboard 1", width: 1080, height: 1350 },
+  { src: "/lookbook/ntg1-01.jpg", alt: "NTG 1", width: 4500, height: 5625 },
+  { src: "/lookbook/ntg2-02.jpg", alt: "NTG 2", width: 1080, height: 1350 },
+  { src: "/lookbook/asapnew.jpg", alt: "ASAP new", width: 1080, height: 1350 },
+  { src: "/lookbook/b_w.jpg", alt: "Black and white design", width: 1080, height: 1350 },
+  { src: "/lookbook/l.jpg", alt: "Lookbook L", width: 1080, height: 1350 },
+  { src: "/lookbook/lkk.jpg", alt: "Lookbook LKK", width: 1080, height: 1350 },
 ];
 
 const LookbookPage = () => {
@@ -125,11 +150,11 @@ const LookbookPage = () => {
 
       {/* Image Grid */}
       <section className="px-2 sm:px-4 pb-16 md:pb-32 md:px-8">
-        <div className="grid grid-cols-2 gap-4 sm:gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="columns-2 gap-4 sm:gap-7 lg:columns-3 xl:columns-5">
           {lookbookImages.map((image, index) => (
             <div
               key={index}
-              className="group relative block w-full aspect-4/5 cursor-pointer overflow-hidden border border-black/5 shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+              className="group relative mb-4 block w-full cursor-pointer overflow-hidden border border-black/5 shadow-[0_15px_35px_rgba(31,31,31,0.08)] transition-transform duration-500 ease-out break-inside-avoid hover:-translate-y-1 hover:shadow-[0_22px_45px_rgba(31,31,31,0.14)] focus:outline-none focus-visible:ring-2 focus-visible:ring-black sm:mb-7"
               onClick={() => setSelectedIndex(index)}
               role="button"
               tabIndex={0}
@@ -143,8 +168,10 @@ const LookbookPage = () => {
               <Image
                 src={image.src}
                 alt={image.alt}
-                fill
-                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                width={image.width}
+                height={image.height}
+                sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 33vw, 50vw"
+                className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-105"
                 quality={100}
                 priority={index === 0}
               />
@@ -179,12 +206,14 @@ const LookbookPage = () => {
             ›
           </button>
 
-          <div className="relative w-full max-w-5xl aspect-3/4 sm:aspect-4/3">
+          <div className="flex w-full max-w-5xl items-center justify-center">
             <Image
               src={lookbookImages[selectedIndex].src}
               alt={lookbookImages[selectedIndex].alt}
-              fill
-              className="object-contain"
+              width={lookbookImages[selectedIndex].width}
+              height={lookbookImages[selectedIndex].height}
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="h-auto max-h-[74vh] w-auto max-w-full object-contain"
               quality={100}
               priority
             />
